@@ -1,0 +1,37 @@
+<form id="dataForm" name="dataForm" account-form-validator callback="ok()">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4>修改账目</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="loginname">类别</label>
+                <select class="form-control"  ng-model="account.acctype" ng-options="acctype.typeid as acctype.typename for acctype in acctypes">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">日期</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="accdate" name="accdate" ng-model="account.accdate"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">金额</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="money" name="money" ng-model="account.money"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default">{{format('common.button.submit')}}</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">{{format('common.button.close')}}</button>
+</div>
+</form>

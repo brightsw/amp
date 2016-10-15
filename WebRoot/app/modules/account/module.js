@@ -20,7 +20,13 @@ define(['angular',
 	            },
 	            views: {
 	                "content@app": {
-	                    templateUrl: "app/modules/account/views/account.html"
+	                    templateUrl: "app/modules/account/views/account.html",
+                        resolve: {
+                            deps: $couchPotatoProvider.resolveDependencies([
+                                'modules/account/controllers/AccountCtrl',
+                                'modules/account/directives/accountForm'
+                            ])
+                        }
 	
 	                }
 	            }
