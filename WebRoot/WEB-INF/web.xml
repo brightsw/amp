@@ -16,12 +16,12 @@
     
 	  <servlet>
 	    <servlet-name>socServlet</servlet-name>
-	    <servlet-class>com.com.bright.amp.core.servlet.SocServlet</servlet-class>
+	    <servlet-class>com.bright.amp.core.servlet.SocServlet</servlet-class>
 	    <load-on-startup>2</load-on-startup>
 	  </servlet> 
 	  
 	  <listener>
-    	<listener-class>com.com.bright.amp.web.listener.HawkContextListener</listener-class>
+    	<listener-class>com.bright.amp.web.listener.HawkContextListener</listener-class>
   	  </listener>   
     <filter>
         <filter-name>characterEncodingFilter</filter-name>

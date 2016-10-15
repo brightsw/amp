@@ -46,7 +46,7 @@
     </appender>
     
      <appender name="dblog"
-        class="com.com.bright.amp.core.log.DatabaseAppender">
+        class="com.bright.amp.core.log.DatabaseAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         	<level>INFO</level>
         </filter>
@@ -131,11 +131,11 @@
     </logger>
     
     <logger name="com.polydata.framework.core.aop" level="error"/>
-    <logger name="com.com.bright.amp.dashboard.jmsthread" level="error"/>
+    <logger name="com.bright.amp.dashboard.jmsthread" level="error"/>
     <logger name="com.polydata.commons.jms.JMQAsynchServer" level="error"/>
-    <logger name="com.com.bright.amp" level="error"/>
+    <logger name="com.bright.amp" level="error"/>
     
-    <logger name="com.com.bright.amp.web.controller" level="info">
+    <logger name="com.bright.amp.web.controller" level="info">
     	<appender-ref ref="dblog" />
     </logger>
     

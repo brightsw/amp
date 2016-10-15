@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.com.bright.amp.user.model.TsysRole">
+<mapper namespace="com.bright.amp.user.model.TsysRole">
     <resultMap id="TsysRole" type="TsysRole">
         <id column="ROLEID" property="roleid" />
         <result column="ROLENAME" property="rolename" />

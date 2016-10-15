@@ -10,12 +10,12 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<description>Shiro安全配置</description>
-	<context:component-scan base-package="com.com.bright.amp.service" />
-	<context:component-scan base-package="com.com.bright.amp.dao" />
-	<context:component-scan base-package="com.com.bright.amp.dmo" />
-	<context:component-scan base-package="com.com.bright.amp.web.util" />
+	<context:component-scan base-package="com.bright.amp.service" />
+	<context:component-scan base-package="com.bright.amp.dao" />
+	<context:component-scan base-package="com.bright.amp.dmo" />
+	<context:component-scan base-package="com.bright.amp.web.util" />
 
-	<bean id="jdbcRealm" class="com.com.bright.amp.web.util.ShiroDbRealm">
+	<bean id="jdbcRealm" class="com.bright.amp.web.util.ShiroDbRealm">
 		<property name="tsysUserDao" ref="tsysUserDao" />
 	</bean>
 
@@ -81,7 +81,7 @@
 		</property>
 	</bean>
 
-    <bean id="pdAuthc" class="com.com.bright.amp.authc.filter.PdFormAuthenticationFilter"/> 
+    <bean id="pdAuthc" class="com.bright.amp.authc.filter.PdFormAuthenticationFilter"/> 
 	<bean
 		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
 		<property name="staticMethod"

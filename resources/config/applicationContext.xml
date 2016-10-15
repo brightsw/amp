@@ -10,9 +10,9 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
     default-lazy-init="true">
-    <context:component-scan base-package="com.com.bright.amp" />
+    <context:component-scan base-package="com.bright.amp" />
 
-	  <bean class="com.com.bright.amp.core.database.DBPropertyPlaceholderConfigurer">
+	  <bean class="com.bright.amp.core.database.DBPropertyPlaceholderConfigurer">
 	    <property name="locations">
 	      <list>
 	        <value>classpath:config/jdbcConfig.properties</value>
@@ -53,10 +53,10 @@
         </property>
         <property name="mapperLocations" value="classpath*:sqlmap/**/${dialect}/*Mapper.xml" />
         <property name="typeAliasesPackage" value="
-			        com.com.bright.amp.user.model,
-			        com.com.bright.amp.log.model,
-			        com.com.bright.amp.authc.model,
-			        com.com.bright.amp.system.model"
+			        com.bright.amp.user.model,
+			        com.bright.amp.log.model,
+			        com.bright.amp.authc.model,
+			        com.bright.amp.system.model"
 			        />
     </bean>
 
@@ -84,7 +84,7 @@
     <!-- AOP控制DB事务管理 -->
     <aop:config proxy-target-class="true">
         <aop:pointcut
-            expression="execution(* com.com.bright.amp..service.*Service.*(..))"
+            expression="execution(* com.bright.amp..service.*Service.*(..))"
             id="serviceTx" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceTx" />
     </aop:config>
@@ -134,7 +134,7 @@
     
     <aop:config-->
         <!--配置规则，满足以下规则的将拦截，第一个*表示所有返回类型，第二个表示service包下的所有class，第三个表示所有方法-->
-        <!-- aop:pointcut id="baseServiceMethods" expression="execution(* com.com.bright.amp.*.service.*.*(..))"/ -->
+        <!-- aop:pointcut id="baseServiceMethods" expression="execution(* com.bright.amp.*.service.*.*(..))"/ -->
         <!-- 符合上面规则的拦截器都会调用到methodServiceAdvisor -->
         <!-- aop:advisor advice-ref="methodServiceAdvisor" pointcut-ref="baseServiceMethods"/>
     </aop:config>
@@ -156,7 +156,7 @@
     </bean>
      -->
 	 
-    <!-- <bean id="traceInterceptor" class="com.polydata.framework.core.trace.TraceInterceptor"></bean> <aop:config> <aop:pointcut id="tracePoint" expression="execution(* com.com.bright.amp.service.user.impl.*(..))" 
+    <!-- <bean id="traceInterceptor" class="com.polydata.framework.core.trace.TraceInterceptor"></bean> <aop:config> <aop:pointcut id="tracePoint" expression="execution(* com.bright.amp.service.user.impl.*(..))" 
         /> <aop:advisor pointcut-ref="tracePoint" advice-ref="traceInterceptor" order="200" /> </aop:config> <aop:config> <aop:pointcut expression="@within(com.polydata.framework.core.spring.Dao)" id="logProfilePointcut" 
         /> <aop:advisor advice-ref="serviceAdvice" pointcut-ref="logProfilePointcut" order="100" /> </aop:config> <bean id="serviceAdvice" class="com.polydata.framework.core.aop.advice.ServiceAdvice"></bean> 
         <tx:annotation-driven transaction-manager="transactionManager" order="300" /> -->

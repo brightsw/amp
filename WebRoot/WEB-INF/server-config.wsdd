@@ -934,13 +934,13 @@
 	
 	<!-- 用于下级向上级上报告警 -->
 	<service name="reportIncident" provider="java:RPC" >
-		<parameter name="className" value="com.com.bright.amp.webservice.SynchronizeWebService" />
+		<parameter name="className" value="com.bright.amp.webservice.SynchronizeWebService" />
 		<parameter name="allowedMethods" value="reportIncident,reportRiskInfo,reportEvtStaInfo,reportIncStaInfo" />
 	</service>
 
 	<!-- 接收上级soc传递而来的策略, 接收到策略后入库保存 -->
 	<service name="dispatchSecPolicy" provider="java:RPC" >
-		<parameter name="className" value="com.com.bright.amp.webservice.SynchronizeWebService" />
+		<parameter name="className" value="com.bright.amp.webservice.SynchronizeWebService" />
 		<parameter name="allowedMethods" value="dispatchSecPolicy" />
 	</service>
 	

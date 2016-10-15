@@ -23,7 +23,7 @@
     
 	-->
     <context:annotation-config/>
-	<context:component-scan base-package="com.com.bright.amp.web.controller" />
+	<context:component-scan base-package="com.bright.amp.web.controller" />
 
 	<!-- 
 	②：启动Spring MVC的注解功能，完成请求和注解POJO的映射，添加拦截器，类级别的处理器映射 
@@ -32,7 +32,7 @@
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors">
             <list>
-                <bean class="com.com.bright.amp.web.util.MyHandlerInterceptor"/>
+                <bean class="com.bright.amp.web.util.MyHandlerInterceptor"/>
             </list>
         </property>
 	</bean>
@@ -45,7 +45,7 @@
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 	    <property name="cacheSeconds" value="0" />
 	    <property name="webBindingInitializer">
-	        <bean class="com.com.bright.amp.web.util.MyWebBinding" />
+	        <bean class="com.bright.amp.web.util.MyWebBinding" />
 	    </property>
 	    <!-- 配置一下对json数据的转换 -->
 	    <property name="messageConverters">
