@@ -1,0 +1,105 @@
+    <!DOCTYPE html>
+        <html ng-app="loginApp">
+	        <head>
+		        <meta charset="utf-8">
+		        <title ng-bind="format('common.product.name')"></title>
+		        <meta name="description" content="">
+		        <meta name="author" content="">
+		        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		        <link rel="stylesheet" type="text/css" media="screen" href="styles/css/bootstrap.min.css">
+		        <link rel="stylesheet" type="text/css" media="screen" href="styles/css/login.css">
+		        <link rel="shortcut icon" href="styles/img/favicon/favicon.ico" type="image/x-icon">
+				<link rel="icon" href="styles/img/favicon/favicon.ico" type="image/x-icon">
+	        </head>
+
+	        <body class="animated fadeInDown" ng-controller="LoginController">
+		        <div class="box">
+			        <input type="hidden" id="noLicence" name="noLicence" value="${noLicence}"/>
+			        <input type="hidden" id="language" name="language" value=""/>
+			        <a class="logo"><img src="styles/img/login/logo_2.png"></a>
+			        <a class="bt"><img src="styles/img/login/bt_6.png"></a>
+			        <img src="styles/img/login/line.png">
+			        <div id="loginDiv" >
+			            <div class="row" id="browser" style="display:none;margin-top:40px;">
+					      <div style="position:absolute;left:70px;">
+					        <div class="txt-color-black pull-center">您的浏览器版本目前不支持，请下载新的浏览器</div>
+					      </div>
+					      <div style="position:absolute;left:330px;">
+					        <div><a href="javascript:downloadBrowser();">下载浏览器</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					      </div>
+					    </div>
+			        	<form class="form-horizontal" id="dataform" action="chromedownload.do" method="POST" target="">
+			        		<div class="form-group form-group-custom">
+								<label class="col-md-4 control-label login-font" ng-bind="format('login.username')"></label>
+								<div class="col-md-5">
+									<input class="form-control" type="text" id="username" tabindex="1">
+								</div>
+							</div>
+							<div class="form-group form-group-custom">
+								<label class="col-md-4 control-label login-font" ng-bind="format('login.password')"></label>
+								<div class="col-md-5 login-font">
+									<input class="form-control" type="password" id="password" tabindex="2">
+								</div>
+                                
+                                
+                                
+                                <div class="col-md-2" >
+									<a href="#" ng-click="openModal()" id="resetPwdBut" ng-bind="format('忘记密码')" tabindex="9"></a>
+								</div>
+							</div>
+                            
+                            
+                            
+                            
+							
+							<div class="form-group form-group-custom">
+								<label class="col-md-4 control-label login-font" ng-bind="format('login.validatecode')"></label>
+								<div class="col-md-2" style="width:28%">
+									<input class="form-control" type="text" id="validatecode" tabindex="3">
+								</div>
+								<div class="col-md-1">
+									<img class="yzm"  alt="{{format('login.validatcodeclick')}}" title="{{format('login.validatcodeclick')}}" src="./operateValidateCode.do" id="imgRnd" name="imgRnd" border="0" usemap="absmiddle" ng-click="reloadImg()" />
+								</div>
+								
+							</div>
+						
+					        <div class="login_box">
+						        <a href="#" class="login" id="subBut" ng-bind="format('login.login')" tabindex="4"></a>
+						        <div class="bottom login-font"></div>
+					        </div>
+				        </form>
+			        </div>
+		        </div>
+
+		        <script type="text/javascript"  src="plugin/ztree/js/jquery-1.4.4.min.js"></script>
+		        <script type="text/javascript"	src="plugin/angular/angular.min.js"></script>
+		        <script type="text/javascript"	src="plugin/angular-sanitize/angular-sanitize.min.js"></script>
+		        <script type="text/javascript"	src="plugin/angular-translate/angular-translate.min.js"></script>
+		        <script type="text/javascript"	src="plugin/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		        <script type="text/javascript"	src="plugin/dialog/js/dialogs-default-translations.min.js"></script>
+		        <script type="text/javascript"	src="plugin/dialog/js/dialogs.min.js"></script>
+		        <script type="text/javascript"	src="app/components/language/Language.js"></script>
+		        <script type="text/javascript"	src="app/login/controllers/LoginCtrl.js"></script>
+		        <script type="text/javascript"  src="app/BrowserDetect.js"></script>
+		        <script type="text/javascript">
+		          function downloadBrowser(){
+				  	$("#dataform").submit(); 	
+				  }
+				
+				  $(function() {
+				    BrowserDetect.init();
+				    var browser = BrowserDetect.browser;
+				    var version = BrowserDetect.version;
+				
+				    if(browser == 'Internet Explorer' && version < 11){
+				      $("#dataform").hide();
+				      $("#browser").show();
+				      $("#loginBtn").hide();
+				    }else{
+					    $("#username").focus();
+				    }
+				 });
+				</script>
+		        
+        </body>
+        </html>

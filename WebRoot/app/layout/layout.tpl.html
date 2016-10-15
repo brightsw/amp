@@ -1,0 +1,29 @@
+<!-- <div data-smart-include="app/layout/partials/header.tpl.html" class="placeholder-header"></div> -->
+
+<div ng-controller="MenuCtrl" data-smart-include="app/layout/partials/menu.html" class="placeholder-left-panel"></div>
+
+<div id="main" role="main">
+	<demo-states></demo-states>
+    <!-- iv id="ribbon">
+				<span class="ribbon-button-alignment">
+					<span id="refresh" class="btn btn-ribbon" reset-widgets
+                          tooltip-placement="bottom"
+                          tooltip-html-unsafe="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings.">
+						<i class="fa fa-refresh"></i>
+					</span>
+				</span>
+
+        <state-breadcrumbs></state-breadcrumbs>
+    </div -->
+
+    <div data-smart-router-animation-wrap="content content@app" data-wrap-for="#content">
+        <div data-ui-view="content" data-autoscroll="false"></div>
+    </div>
+</div>
+
+<div data-smart-include="app/layout/partials/footer.tpl.html" ng-controller="MenuCtrl"></div>
+
+<div data-smart-include="app/components/shortcut/shortcut.tpl.html"></div>
+
+
+

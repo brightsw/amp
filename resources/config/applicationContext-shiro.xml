@@ -1,0 +1,107 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<description>Shiro安全配置</description>
+	<context:component-scan base-package="com.com.bright.amp.service" />
+	<context:component-scan base-package="com.com.bright.amp.dao" />
+	<context:component-scan base-package="com.com.bright.amp.dmo" />
+	<context:component-scan base-package="com.com.bright.amp.web.util" />
+
+	<bean id="jdbcRealm" class="com.com.bright.amp.web.util.ShiroDbRealm">
+		<property name="tsysUserDao" ref="tsysUserDao" />
+	</bean>
+
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="sessionMode" value="native" />
+		<!-- <property name="cacheManager" ref="shiroCacheManager"></property> -->
+		<property name="cacheManager" ref="shiroCacheManager" />
+		<property name="realms">
+			<list>
+				<ref bean="jdbcRealm" />
+			</list>
+		</property>
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
+
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionDAO" ref="sessionDAO" />
+	</bean>
+
+	<!--bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO">
+	</bean -->
+	
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+         <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+     </bean>	
+
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+	</bean>
+
+	<!-- Shiro Filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.html" />
+		<property name="successUrl" value="/index.html" />
+        <property name="filters"> 
+             <util:map> 
+                 <entry key="authc" value-ref="pdAuthc"/> 
+             </util:map> 
+        </property>
+		<property name="filterChainDefinitions">
+			<value>
+				/licence.html = anon
+				/login.html = anon
+				/resetPasswd.html = anon
+				/login.do = anon
+				/getLang.do = anon
+				/logout.do = anon
+				/isLicenceExist.do = anon
+				/ = anon
+				/operateValidateCode.do = anon
+				/loginCheck.do = anon
+				/updateLicence.do = anon
+				/getHardwareid.do = anon
+				/tomcatTest.do = anon
+				/exportLog.do = anon
+				/resetPasswd.do = anon
+				/chromedownload.do = anon
+				/*.do = authc
+				/*.html = authc				
+			</value>
+		</property>
+	</bean>
+
+    <bean id="pdAuthc" class="com.com.bright.amp.authc.filter.PdFormAuthenticationFilter"/> 
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+		<property name="arguments" ref="securityManager" />
+	</bean>
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true"></property>
+	</bean>
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+    <!-- 字符串国际化，在页面上使用<spring:message code="key"/> 或者 <fmt:message key="key"/>-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="config/messages" />
+        <property name="useCodeAsDefaultMessage" value="true" />
+    </bean>
+</beans>

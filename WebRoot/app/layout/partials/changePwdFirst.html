@@ -1,0 +1,37 @@
+<form id="dataForm" name="dataForm" change-pwd-form-validator callback="ok()">
+<div class="modal-header">
+    <h4>首次登录密码修改</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="password">新密码 </label>
+                <input type="password" class="form-control"  id="password" name="password" ng-model="param.password"/>
+                <p class="note">
+					最小长度[{{minPwdLength}}],数字最小数量[{{minFigureNum}}],符号最小数量[{{minSpCharNum}}]
+				</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">确认密码 </label>
+                <input type="password" class="form-control"  id="confirmPwd" name="confirmPwd" ng-model="user.confirmPwd"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">邮箱 </label>
+                <input type="text" class="form-control"  id="email" name="email" ng-model="param.email"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default">提交</button>
+</div>
+</form>

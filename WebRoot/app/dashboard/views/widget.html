@@ -1,0 +1,49 @@
+<div jarvis-widget
+	id="jarvis-widgetd{{dashboard.dashboardid}}_r{{layoutrow.roworder}}_c{{layoutcolumn.columnorder}}_w{{widget.widgetid}}"
+	data-widget-editbutton="false" data-widget-sortable="false"
+	data-widget-colorbutton="false">
+	<header>
+		<span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i>
+		</span>
+		<h2>{{widget.pagename}}</h2>
+	</header>
+	<div>
+		<div class="widget-body no-padding" 
+			ldh="{{layoutrow.dsbLayoutRow.rowheight}}px">
+			<echart-chart ng-if="widget.dsbWidgets!=null&&widget.dsbWidgets[0].plugintype==1"
+				data="{{widget.dsbWidgets[0].widgeturl}}"
+				load-data="loadData(callback)"
+				chart-type="{{widget.dsbWidgets[0].widgetcharttype}}"
+				mapname="{{widget.dsbWidgets[0].mapname}}"
+				widget-page-id="d{{dashboard.dashboardid}}_r{{layoutrow.roworder}}_c{{layoutcolumn.columnorder}}_w{{widget.widgetid}}"
+				style="height:{{layoutrow.dsbLayoutRow.rowheight}}px;"
+				plugin-type="{{widget.dsbWidgets[0].plugintype}}"
+				is-fullscreen="false">
+			</echart-chart>
+			
+			<d3-chart class="chart" ng-if="widget.dsbWidgets!=null&&widget.dsbWidgets[0].plugintype==2" 
+				data="{{widget.dsbWidgets[0].widgeturl}}"
+				load-data="loadData(callback)"
+				chart-type="{{widget.dsbWidgets[0].widgetcharttype}}"
+				widget-page-id="d{{dashboard.dashboardid}}_r{{layoutrow.roworder}}_c{{layoutcolumn.columnorder}}_w{{widget.widgetid}}"				
+				height="{{layoutrow.dsbLayoutRow.rowheight}}" 
+				is-fullscreen="false"
+				plugin-type="{{widget.dsbWidgets[0].plugintype}}"
+				on-click="d3OnClick(item)"></d3-chart>
+
+			<div ng-if="widget.dsbWidgets==null" id="non-date-graph" style="height:{{layoutrow.dsbLayoutRow.rowheight}}px"
+				class="chart no-padding">
+				<div class="selWidge" ng-if="enableEdit" rel="nowidget">
+					<a href="" onclick="angular.element(this).scope().selWidget(this);"">
+						<span class="fa fa-plus"></span>
+						<div>{{format('dashboard.fw.addwidget')}}</div>
+					</a>
+				</div>
+			</div>
+			<div ng-if="widget.dsbWidgets!=null&&widget.dsbWidgets[0].plugintype==1 && widget.dsbWidgets[0].widgetcharttype==9">
+			
+				test
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,50 @@
+
+    <div class="pull-right">
+
+        <div id="hide-menu" class="btn-header pull-right">
+        <span> <a toggle-menu title="Collapse Menu"><i
+                class="fa fa-reorder"></i></a> </span>
+        </div>
+
+        <div  class="btn-header transparent pull-right" style="margin-right:20px;" >
+        	<span/>
+			<span> <a ng-click="logout()" title="注销" class="header-left-btn"> <i class="fa fa-lg fa-fw fa-sign-out"></i></a> </span>
+		</div>
+		<!-- 
+		<div id="aboutBut" class="btn-header transparent pull-right">
+			<span/>
+			<span> <a ng-click="showHelpDialog()" title="帮助" class="header-left-btn"><i class="fa fa-lg fa-fw fa-question-circle"></i></a> </span>
+		</div>
+    	 -->
+		<div class="btn-group visible-tablet btn-header transparent pull-right">
+			<span class="activity-dropdown" data-toggle="dropdown">
+				<a href="javascript:void(0);" title="主题" ><i class="fa fa-qrcode"></i></a>
+			</span>
+			<ul class="dropdown-menu pull-left" id="smart-styles">
+				<li ng-repeat="skin in skins">
+					<a ng-click="setSkin(skin)">{{skin.label}}<i ng-if="skin.name == $parent.smartSkin" class="fa fa-check fa-fw"></i></a>
+				</li>
+			</ul>
+	
+		</div>
+				
+		<!-- <div id="task-group" class="btn-header transparent pull-right">
+			<span> 
+				<a id="activity" title="通知" activities-dropdown-toggle>
+					<i class="fa fa-user"></i>
+					<b class="badge bg-color-red">{{activities_total}}</b> 
+				</a> 
+		    <div smart-include="app/components/activities/activities.html"></div>
+			</span>
+	    </div> -->
+	    
+        <!-- <form action="" class="header-search pull-right" onsubmit="return false;">
+			<input type="text" name="param" placeholder="全文检索" id="search-fld">
+			<button type="button" id="gloabSearch">
+				<i class="fa fa-search"></i>
+			</button>
+			<a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
+		</form>	
+ -->
+    </div>
+    

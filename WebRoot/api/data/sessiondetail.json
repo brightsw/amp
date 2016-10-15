@@ -1,0 +1,182 @@
+{
+  "code": "200",
+  "flowstruct": {
+    "sendOctet": 772,
+    "receiveOctet": 126,
+    "range": "",
+    "userAgent": "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like",
+    "tag": "",
+    "startTimestamp": "2016-05-05 09:39:55",
+    "children": 0,
+    "contentType": "",
+    "dst": "58.222.24.156",
+    "transferLanguage": "zh-CN",
+    "date": "",
+    "fieldnum": 23,
+    "icmpCode": 80,
+    "cacheControl": "",
+    "packeCnt": "196608",
+    "version": "",
+    "sessionID": 2779888141001455294,
+    "srcgeo": "",
+    "length": "0",
+    "domain": "gg.stargame.com",
+    "src": "192.168.24.165",
+    "pflowid": 0,
+    "dp": 80,
+    "transferEncoding": "32",
+    "expire": "",
+    "connection": "Keep-Alive",
+    "protocol": "TCP",
+    "vlanid": "0",
+    "sp": 51892,
+    "status": "",
+    "recursionlevel": 0,
+    "url": "/s.ashx?u\u003dE03D8DBCCD35436E504F8015985F6B3C903704BCBB014CB8\u0026amp;t\u003d1462412392300",
+    "pragma": "",
+    "acceptLanguage": "",
+    "icmpType": 51892,
+    "receivePacket": "2",
+    "server": "",
+    "alproto": "HTTP",
+    "method": "CNGET",
+    "alprotoFlag": 1,
+    "acceptEncoding": "0",
+    "dstgeo": "",
+    "sendPacket": "4",
+    "endTimestamp": "2016-05-05 09:39:55",
+    "af": 2
+  },
+  "commonColumns": [
+    {
+      "columnname": "协议类型",
+      "reserved1": "protocol"
+    },
+    {
+      "columnname": "应用协议类型",
+      "reserved1": "alproto"
+    },
+    {
+      "columnname": "开始时间",
+      "reserved1": "startTimestamp"
+    },
+    {
+      "columnname": "结束时间",
+      "reserved1": "endTimestamp"
+    },
+    {
+      "columnname": "发送包数",
+      "reserved1": "sendPacket"
+    },
+    {
+      "columnname": "接收包数",
+      "reserved1": "receivePacket"
+    },
+    {
+      "columnname": "发送字节数",
+      "reserved1": "sendOctet"
+    },
+    {
+      "columnname": "接收字节数",
+      "reserved1": "receiveOctet"
+    },
+    {
+      "columnname": "源地址",
+      "reserved1": "src"
+    },
+    {
+      "columnname": "目的地址",
+      "reserved1": "dst"
+    },
+    {
+      "columnname": "源端口",
+      "reserved1": "sp"
+    },
+    {
+      "columnname": "目的端口",
+      "reserved1": "dp"
+    }
+  ],
+  "sessionColumns": [
+    {
+      "columnname": "方法",
+      "reserved1": "method"
+    },
+    {
+      "columnname": "版本",
+      "reserved1": "version"
+    },
+    {
+      "columnname": "域名",
+      "reserved1": "domain"
+    },
+    {
+      "columnname": "URL",
+      "reserved1": "url"
+    },
+    {
+      "columnname": "状态",
+      "reserved1": "status"
+    },
+    {
+      "columnname": "服务器",
+      "reserved1": "server"
+    },
+    {
+      "columnname": "日期",
+      "reserved1": "date"
+    },
+    {
+      "columnname": "内容类型",
+      "reserved1": "contentType"
+    },
+    {
+      "columnname": "长度",
+      "reserved1": "length"
+    },
+    {
+      "columnname": "标记",
+      "reserved1": "tag"
+    },
+    {
+      "columnname": "连接",
+      "reserved1": "connection"
+    },
+    {
+      "columnname": "用户代理",
+      "reserved1": "userAgent"
+    },
+    {
+      "columnname": "传输编码",
+      "reserved1": "transferEncoding"
+    },
+    {
+      "columnname": "传输语言",
+      "reserved1": "transferLanguage"
+    },
+    {
+      "columnname": "接收编码",
+      "reserved1": "acceptEncoding"
+    },
+    {
+      "columnname": "接收语言",
+      "reserved1": "acceptLanguage"
+    },
+    {
+      "columnname": "缓存控制",
+      "reserved1": "cacheControl"
+    },
+    {
+      "columnname": "杂注",
+      "reserved1": "pragma"
+    },
+    {
+      "columnname": "过期时间",
+      "reserved1": "expire"
+    },
+    {
+      "columnname": "范围",
+      "reserved1": "range"
+    }
+  ]
+}

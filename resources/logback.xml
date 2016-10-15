@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+    <property name="logName" value="hawk" />
+    <property name="logBase" value="${catalina.base}/logs/${logName}_logs" />
+    <!-- <property file="logPath.properties"/> -->
+    <appender name="stdout"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %5p [%F:%L] - %m%n</pattern>
+        </encoder>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %date [%thread] %-5level %logger{80}[%file:%line method:%M] - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="logfile"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+    		<level>ERROR</level>  
+    		<onMatch>ACCEPT</onMatch>  
+    		<onMismatch>DENY</onMismatch>  
+		</filter>  
+        <Encoding>UTF-8</Encoding>
+        <File>${logBase}/${logName}.log</File>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %date [%thread] %-5level %logger{80}[%file:%line method:%M] - %msg%n
+            </pattern>
+        </layout>
+
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <maxHistory>60</maxHistory>
+            <fileNamePattern>
+                ${logBase}/${logName}-%d{yyyy-MM-dd}-%i.log.gz
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    
+     <appender name="dblog"
+        class="com.com.bright.amp.core.log.DatabaseAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        	<level>INFO</level>
+        </filter>
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator name="myEval">
+				<expression>formattedMessage.contains("HAWK-LOG")</expression>
+			</evaluator>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter> 
+    </appender>
+    
+    <logger name="org.springframework.web.filter">
+        <level value="error" />
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="error" />
+    </logger>
+
+    <logger name="com.ibatis">
+        <level value="error" />
+    </logger>
+
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource">
+        <level value="error" />
+    </logger>
+
+    <logger name="com.ibatis.common.jdbc.ScriptRunner">
+        <level value="error" />
+    </logger>
+
+    <logger name="com.ibatis.common.jdbc.SqlMapClientDelegate">
+        <level value="error" />
+    </logger>
+    <logger name="java.sql.Connection">
+        <level value="error" />
+    </logger>
+
+    <logger name="java.sql.Statement">
+        <level value="error" />
+    </logger>
+
+    <logger name="java.sql.PreparedStatement">
+        <level value="error" />
+    </logger>
+
+    <logger name="java.sql.ResultSet">
+        <level value="error" />
+    </logger>
+    
+    <logger name="jdbc.resultsettable">
+        <level value="error" />
+    </logger>
+
+    <logger name="jdbc.sqltiming">
+        <level value="info" />
+    </logger>
+
+    <logger name="jdbc.audit">
+        <level value="error" />
+    </logger>
+
+    <logger name="jdbc.resultset">
+        <level value="error" />
+    </logger>
+
+    <logger name="jdbc.connection">
+        <level value="error" />
+    </logger>
+
+    <logger name="jdbc.sqlonly">
+        <level value="error" />
+    </logger>
+    
+    <logger name="ch.qos.logback">
+    	<level value="error"/>
+    </logger>
+    
+    <logger name="net.sf.log4jdbc">
+    	<level value="error"/>
+    </logger>
+    
+    <logger name="com.polydata.framework.core.aop" level="error"/>
+    <logger name="com.com.bright.amp.dashboard.jmsthread" level="error"/>
+    <logger name="com.polydata.commons.jms.JMQAsynchServer" level="error"/>
+    <logger name="com.com.bright.amp" level="error"/>
+    
+    <logger name="com.com.bright.amp.web.controller" level="info">
+    	<appender-ref ref="dblog" />
+    </logger>
+    
+    <root level="error">
+    	<appender-ref ref="logfile"/>
+    </root>
+    
+    <root level="info">
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>

@@ -1,0 +1,71 @@
+<div ng-controller="AccountCtrl">
+	<div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+		<header id="searchDiv">
+			<span class="widget-icon"> <i class="fa fa-search"></i> </span>
+			<h2>{{format('common.searchcondition')}}</h2>
+		</header>
+		<div>
+			<div class="jarviswidget-editbox">
+			</div>
+			<div class="widget-body">
+				<form class="form-horizontal" id="exportForm" action="exportLog.do" method="POST" target="">
+					<input type="hidden" id="logtype" name="logtype" value="2"/>
+					<div class="form-group">
+						<label class="col-md-1 control-label">{{format('system.subsystem.param.date')}}</label>
+						<div class="col-md-3">
+							<input class='form-control' type='text' id='createtime' name='createtime' ng-model="param.createtime" onkeydown="return false;" 
+								 data-smart-datepicker data-date-format="yy-mm-dd">
+						</div>
+						<label class="col-md-1 control-label">{{format('system.sysstate.ipaddress')}}</label>
+						<div class="col-md-3">
+							<input class="form-control"  type="text" name="ipaddress" id="ipaddress" ng-model="param.ipaddress">
+						</div>
+						<label class="col-md-1 control-label">{{format('system.logmanage.user')}}</label>
+						<div class="col-md-3">
+							<input class="form-control"  type="text" name="operatoruser" id="operatoruser" ng-model="param.operatoruser">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-1 control-label">{{format('system.logmanage.content')}}</label>
+						<div class="col-md-3">
+							<input class="form-control"  type="text" name="logcontent" id="logcontent" ng-model="param.logcontent">
+						</div>
+						<label class="col-md-1 control-label">{{format('system.logmanage.level')}}</label>
+						<div class="col-md-3">
+							<select ng-model="param.loglevel" class="form-control"  id="loglevel" name="loglevel">
+								<option value=""></option>
+								<option value="4">{{format('system.logmanage.deadly')}}</option>
+								<option value="3">{{format('system.logmanage.serious')}}</option>
+								<option value="2">{{format('system.logmanage.warning')}}</option>
+								<option value="1">{{format('system.logmanage.info')}}</option>
+								<option value="0">{{format('system.logmanage.debug')}}</option>
+           					</select> 
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-12">
+								<input class="btn btn-default" id="searchBut" name="searchBut" type="button" value="{{format('common.button.search')}}"/>
+								<input class="btn btn-default" id="clearBut" type="button" value="{{format('common.button.clear')}}" ng-click="clearData();"/>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="jarviswidget" id="widget-userlist-id-0" data-jarvis-widget>
+		<header>
+			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+			<h2>账目列表</h2>
+		</header>
+		<div>
+			<div class="widget-body no-padding" data-sparkline-container>
+				<table id="mytable2" datatable-basic data-table-options="tableOptions2" search_data="searchData()"
+					class="display projects-table table table-striped table-bordered table-hover"
+					cellspacing="0" width="100%">
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

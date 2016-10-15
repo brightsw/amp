@@ -1,0 +1,47 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+<link rel="stylesheet" type="text/css" media="screen" href="plugin/agile-carousel/agile_carousel.css"> 
+    <form action="" id="priorderForm" target="post" autocomplete="off">
+    <input type="hidden" ng-model="currLayoutid">
+    <input type="hidden" ng-model="currDashboardid">
+    <ul id="dashboardTab" class="nav nav-tabs bordered">
+        <li class="priorder" onclick="angular.element(this).scope().switchTab(this)" ng-class="$first?'active':''" ng-if="dashboard.dsbDashboardPrivilege!=null" ng-repeat="dashboard in dashboardTabs">
+            <input type="hidden" name="dashboardprivilegelist[$index].dsbDashboard.dashboardid" class="tabdashboardid" value="{{dashboard.dashboardid}}">
+            <input type="hidden" name="dashboardprivilegelist[$index].displayorder" class="tabdisplayorder">
+            <input type="hidden" name="dashboardprivilegelist[$index].isdisplay" value="{{dashboard.dsbDashboardPrivilege.isdisplay}}" class="tabisdisplay">
+            <a data-toggle="tab" rel="dashboardTabContent{{dashboard.layoutid}}" layoutid="{{dashboard.layoutid}}" ng-class="dashboard.dsbDashboardPrivilege.isdisplay==1?'eye-open':'eye-close hide'">
+            	<i onclick="angular.element(this).scope().doTrash(this)" class="fa fa-lg fa-trash-o hide" ng-if="dashboard.issysdefault==0"></i>
+                <span dashid="{{dashboard.dashboardid}}" name="{{dashboard.dashboardname}}" ng-class="dashboard.issysdefault==0?'self-define':''" >{{dashboard.dashboardname}}</span>
+                <i onclick="angular.element(this).scope().doEye(this)" class="fa fa-lg fa-eye hide" ng-class="dashboard.dsbDashboardPrivilege.isdisplay==1?'fa-eye':'fa-eye-slash'"></i>
+            </a>
+        </li>
+        <div id="timeSel">
+        	<!-- div smart-include="app/dashboard/views/timeSel.html"></div-->
+        </div>
+        <div id="dashConfig" ng-click="doConfig()"><i class="fa fa-2x fa-cog" title='编辑'></i></div>
+        <div id="dashAdd" ng-click="addDashBoard()"><i class="fa fa-2x fa-plus hide" title='添加仪表板'></i></div>
+	</ul>
+    </form> 
+    <!-- widget grid -->
+    <section id="widget-grid" widget-grid>
+        <div id="dashboardTabContent{{dashboard.dashboardid}}" class="dashboardTabContent" ng-class="$first?'':'hide'" ng-repeat="dashboard in dashboards">
+        <input type="hidden" id="issysdefault" name="issysdefault" value="{{dashboard.issysdefault}}">
+        	<div class="row" ng-repeat="layoutrow in dashboard.layout.dsbLayout_Rows">
+                <article 
+                		pageid="{{layoutcolumn.widgetPage.pageid}}" 
+                		roworder="{{layoutrow.roworder}}" 
+                		columnorder="{{layoutcolumn.columnorder}}" 
+                		rowid="{{layoutrow.rowid}}" 
+                		columnid="{{layoutcolumn.columnid}}" 
+                		rowheight="{{layoutrow.dsbLayoutRow.rowheight}}" 
+                		class="col-sm-12 col-md-12 col-lg-{{layoutcolumn.dsbLayoutColumn.columnwidth}}" 
+                		ng-repeat="layoutcolumn in layoutrow.dsbLayout_Columns">
+                    <div smart-include="app/dashboard/views/widget.html" ng-init="widget=layoutcolumn.widgetPage"></div>
+				</article>
+				<div ng-mode="enableEdit" ng-if="enableEdit && dashboard.issysdefault==0" smart-include="app/dashboard/views/setLayout.html"></div>
+        	</div>
+        	<div ng-if="(dashboard.layout.dsbLayout_Rows.length==0 || dashboard.layout.dsbLayout_Rows==null) && enableEdit" smart-include="app/dashboard/views/blankLayout.html"></div>
+        </div>
+    </section>
+    <div smart-include="app/dashboard/views/selectLayout.html"></div>
+</div>

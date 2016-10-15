@@ -1,0 +1,95 @@
+<form id="dataForm" name="dataForm" self-form-validator callback="ok()">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4>用户自服务</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="loginname"> 登录名称</label>
+                <input type="text" class="form-control"  id="loginname" name="loginname" ng-model="user.loginname" disabled/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="username"> 用户名称</label>
+                <input type="text" class="form-control" placeholder="必填项" id="username" name="username" ng-model="user.username"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="usergroupid">用户组</label>
+                <select class="form-control"  ng-model="user.usergroupid" ng-options="group.usergroupid as group.groupname for group in groups" disabled>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="roleid"> 角色</label>
+                <select class="form-control"  ng-model="user.roleid" ng-options="role.roleid as role.rolename for role in roles" disabled>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="telephone"> 电话号码</label>
+                <input type="text" class="form-control" placeholder="" id="telephone" name="telephone" ng-model="user.telephone"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="mobilephone"> 手机号码</label>
+                <input type="text" class="form-control" placeholder="" id="mobilephone" name="mobilephone" ng-model="user.mobilephone"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="jobnum"> 工号</label>
+                <input type="text" class="form-control" placeholder="" id="jobnum" name="jobnum" ng-model="user.jobnum"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email"> 电子邮箱</label>
+                <input type="text" class="form-control" placeholder="必填项" id="email" name="email" ng-model="user.email"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="password">当前登录密码 </label>
+                <input type="password" class="form-control" placeholder="必填项" id="orginalpassword" name="orginalpassword" ng-model="user.orginalpassword"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="password">新密码 </label>
+                <input type="password" class="form-control"  id="password" name="password" ng-model="user.password"/>
+                <p class="note">
+					最小长度[{{minPwdLength}}],数字最小数量[{{minFigureNum}}],符号最小数量[{{minSpCharNum}}]
+				</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="username">确认密码 </label>
+                <input type="password" class="form-control"  id="confirmPwd" name="confirmPwd" ng-model="user.confirmPwd"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()" type="button">关闭</button>
+    <button class="btn btn-default">提交</button>
+</div>
+</form>

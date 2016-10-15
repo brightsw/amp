@@ -1,0 +1,28 @@
+<form id="dataForm" name="dataForm">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4>{{format('login.forgetpwd')}}</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="password">{{format('system.user.username')}} </label>
+                <input type="text" class="form-control"  id="resetuser" name="resetuser" ng-model="param.resetuser"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">{{format('system.user.email')}}</label>
+                <input type="text" class="form-control"  id="email" name="email" ng-model="param.email"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="ok()">{{format('common.button.submit')}}</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">{{format('common.button.close')}}</button>
+</div>
+</form>

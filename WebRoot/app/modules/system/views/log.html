@@ -1,0 +1,19 @@
+<div id="content" >
+	<section id="widget-grid" class="">
+		<div class="row">
+			<article class="col-sm-12 col-md-12 col-lg-12" >
+	            <ul id="myTab1" class="nav nav-tabs bordered">
+	                <li ng-class="{active: $state.includes('**.log.operatelog')}">
+	                    <a ui-sref=".operatelog">{{format('system.logmanage.operatelog')}}</a>
+	                </li>
+	                <!-- <li ng-class="{active: $state.includes('**.log.runninglog')}">
+	                    <a ui-sref=".runninglog">{{format('system.logmanage.runninglog')}}</a>
+	                </li> -->
+	            </ul>
+	            <div id="myTabContent1" data-ui-view="" class="tab-content">
+	            
+	            </div>
+            </article>
+        </div>
+    </section>
+</div>

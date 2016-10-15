@@ -1,0 +1,126 @@
+[
+  {
+    "name": "flare@analytics@cluster@192.168.25.1",
+    "size": 3938,
+    "imports": [
+      "flare@animate@Transitioner",
+      "flare@vis@data@DataList"
+    ]
+  },
+  {
+    "name": "flare@analytics@cluster@CommunityStructure",
+    "size": 3812,
+    "imports": [
+      "flare@util@math@IMatrix",
+      "flare@analytics@cluster@MergeEdge"
+    ]
+  },
+  {
+    "name": "flare@analytics@cluster@CommunityStructure1",
+    "size": 3812,
+    "imports": [
+      "flare@util@math@IMatrix",
+      "flare@analytics@cluster@MergeEdge"
+    ]
+  },
+  {
+    "name": "flare@analytics@cluster@CommunityStructure2",
+    "size": 3812,
+    "imports": [
+      "flare@util@math@IMatrix",
+      "flare@analytics@cluster@MergeEdge"
+    ]
+  },
+  {
+    "name": "flare@analytics@cluster@CommunityStructure3",
+    "size": 3812,
+    "imports": [
+      "flare@util@math@IMatrix",
+      "flare@analytics@cluster@MergeEdge"
+    ]
+  },
+  {
+    "name": "flare@animate@Transitioner",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@animate@Transitioner",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@animate@192.168.25.1",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@animate@Transitioner2",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@animate@Transitioner3",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@animate@Transitioner4",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@animate@Transitioner5",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@vis@data@DataList",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@vis@data@DataList1",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@vis@data@DataList2",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@vis@data@DataList3",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@vis@data@DataList4",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@util@math@IMatrix",
+    "size": 3812,
+    "imports": [
+    ]
+  },
+  {
+    "name": "flare@analytics@cluster@MergeEdge",
+    "size": 3812,
+    "imports": [
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+	<h4 class="modal-title" id="myModalLabel">{{format('common.product.name')}}</h4>
+</div>
+<div class="modal-body">
+	<p ng-bind-html="aboutcontent">
+	</p>
+	<p>
+	{{format('common.product.warning')}}
+	</p>
+	<p class="txt-color-blue">
+		{{format('common.product.license')}}
+	</p>
+	
+	<div class="hr hr-12 hr-double"></div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()" type="button">{{format('common.button.close')}}</button>
+</div>

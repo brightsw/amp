@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.com.bright.amp.system.model.TsysLog">
+    <resultMap id="TsysLog" type="TsysLog">
+        <id column="LOGID" property="logid" />
+        <result column="COMPONENTNAME" property="componentname" />
+        <result column="IPADDRESS" property="ipaddress" />
+        <result column="LOGLEVEL" property="loglevel" />
+        <result column="LOGCONTENT" property="logcontent" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="OPERATORUSER" property="operatoruser" />
+        <result column="LOGTYPE" property="logtype" />
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="TsysLog.columns">
+        LOGID,
+        COMPONENTNAME,
+        IPADDRESS ,
+        LOGLEVEL,
+        LOGCONTENT,
+        CREATETIME,
+        OPERATORUSER,
+        LOGTYPE
+    </sql>
+    
+  <insert id="insert" parameterType="TsysLog">
+      INSERT INTO T_SYS_LOG
+      (COMPONENTNAME,
+        IPADDRESS ,
+        LOGLEVEL,
+        LOGCONTENT,
+        CREATETIME,
+        OPERATORUSER,
+        LOGTYPE
+      )
+      Values
+      (
+		#{componentname},
+		#{ipaddress},
+		#{loglevel},
+		#{logcontent},
+		now(),
+		#{operatoruser},
+		#{logtype}
+	  )
+  </insert>  
+    
+   <select id="getById" resultType="TsysLog"  parameterType="java.lang.String">
+		SELECT <include refid="TsysLog.columns" />
+	    <![CDATA[
+		    FROM T_SYS_LOG
+	        WHERE LOGID=#{logid}
+	    ]]>
+	</select>
+
+	<sql id="TsysLog.findPage.where">
+		<where>	      	
+	       <if test="@Ognl@isNotEmpty(componentname)">
+				AND UPPER(COMPONENTNAME) LIKE UPPER(CONCAT('%',#{componentname},'%'))
+			</if>     	
+	       <if test="@Ognl@isNotEmpty(ipaddress)">
+				AND UPPER(IPADDRESS) LIKE UPPER(CONCAT('%',#{ipaddress},'%'))
+			</if>     	
+	       <if test="@Ognl@isNotEmpty(loglevel)">
+				AND LOGLEVEL = #{loglevel}
+			</if>     	
+	       <if test="@Ognl@isNotEmpty(logcontent)">
+				AND UPPER(LOGCONTENT) LIKE UPPER(CONCAT('%',#{logcontent},'%'))
+			</if>     	
+	       <if test="@Ognl@isNotEmpty(createtime)">
+				AND CREATETIME between str_to_date(CONCAT(#{createtime},' 00:00:00'),'%Y-%m-%d %H:%i:%s')
+				AND  str_to_date(CONCAT(#{createtime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')
+			</if>     	
+	       <if test="@Ognl@isNotEmpty(operatoruser)">
+				AND UPPER(OPERATORUSER) LIKE UPPER(CONCAT('%',#{operatoruser},'%'))
+			</if>     	
+	       <if test="@Ognl@isNotEmpty(logtype)">
+				AND LOGTYPE = #{logtype}
+			</if>     	  	
+		</where>
+	</sql>
+	
+  <select id="count" resultType="java.lang.Long" parameterType="java.util.HashMap">
+      SELECT count(*) FROM T_SYS_LOG
+			<include refid="TsysLog.findPage.where"/>    
+  </select>
+  
+  <select id="find" resultType="TsysLog"  parameterType="java.util.HashMap">
+    	SELECT <include refid="TsysLog.columns" />
+	    FROM T_SYS_LOG 
+		<include refid="TsysLog.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>	
+		<if test="@Ognl@isEmpty(sortColumns)">
+			ORDER BY CREATETIME DESC
+		</if>			
+  </select>		
+        
+</mapper>

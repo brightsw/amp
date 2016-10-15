@@ -1,0 +1,14 @@
+monitor.incident.inccategory.success=显示威胁 告警统计列表成功
+monitor.incident.inccategory.fail=显示 威胁告警统计列表失败
+monitor.incident.inc.success=显示 威胁告警列表成功
+monitor.incident.inc.fail=显示 威胁告警列表失败
+monitor.common.setup.success=设置显示字段成功
+monitor.common.setup.fail=设置显示字段失败
+monitor.incident.clear.success=清除威胁告警成功
+monitor.incident.clear.fail=清除威胁告警失败
+monitor.incident.count.success=查看威胁告警详情成功
+monitor.incident.count.success=查看威胁告警详情失败
+monitor.event.evtcategory.success=显示安全事件统计成功
+monitor.event.evtcategory.fail=显示安全事件统计失败
+monitor.event.evt.success=显示安全事件成功
+monitor.event.evt.fail=显示安全事件失败

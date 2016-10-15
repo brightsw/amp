@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.com.bright.amp.user.model.TsysUser">
+    <resultMap id="TsysUser" type="TsysUser">
+        <id column="USERID" property="userid" />
+        <result column="USERGROUPID" property="usergroupid" />
+        <result column="ROLEID" property="roleid" />
+        <result column="LOGINNAME" property="loginname" />
+        <result column="USERNAME" property="username" />
+        <result column="JOBNUM" property="jobnum" />
+        <result column="EMAIL" property="email" />
+        <result column="TELEPHONE" property="telephone" />
+        <result column="MOBILEPHONE" property="mobilephone" />
+        <result column="IPADDRESS" property="ipaddress" />
+        <result column="POLICYID" property="policyid" />
+        <result column="PASSWORD" property="password" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="STATUS" property="status" />
+        <result column="ISSYSDEFAULT" property="issysdefault" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="LASTLOGINTIME" property="lastlogintime" />
+        <result column="THEMETYPE" property="themetype" />
+        <result column="PREFIX" property="prefix" />
+        <result column="STARTSTANDARDIP" property="startstandardip" />
+        <result column="ENDSTANDARDIP" property="endstandardip" />
+        <result column="VERIFYIPADDR" property="verifyipaddr" />
+        <result column="ROLENAME" property="rolename" />
+        <result column="ROLENAMEEN" property="rolenameen" />
+        <result column="GROUPNAME" property="groupname" />
+        <result column="GROUPNAMEEN" property="groupnameen" />
+        <result column="UPDATEPWDCOUNT" property="updatepwdcount" />
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="TsysUser.columns">
+        A.USERID ,A.USERGROUPID ,A.ROLEID ,A.LOGINNAME ,A.USERNAME ,A.JOBNUM ,A.EMAIL ,
+        A.TELEPHONE,A.MOBILEPHONE,A.IPADDRESS,A.POLICYID,A.PASSWORD,A.DESCRIPTION,
+        A.STATUS,A.ISSYSDEFAULT,A.CREATETIME,A.UPDATEPWDCOUNT,
+        A.THEMETYPE,A.PREFIX,A.STARTSTANDARDIP,A.ENDSTANDARDIP,A.VERIFYIPADDR,
+        B.ROLENAME,B.ROLENAMEEN,C.GROUPNAME,C.GROUPNAMEEN,D.LASTLOGINTIME
+    </sql>
+
+  <insert id="insert" parameterType="TsysUser">
+      INSERT INTO T_SYS_USER
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="@Ognl@isNotEmpty(usergroupid)">
+      			USERGROUPID,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(roleid)">
+      			ROLEID,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(loginname)">
+      			LOGINNAME,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(username)">
+      			USERNAME,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(jobnum)">
+      			JOBNUM,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(email)">
+      			EMAIL,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(telephone)">
+      			TELEPHONE,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(mobilephone)">
+      			MOBILEPHONE,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(password)">
+      			PASSWORD,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(description)">
+      			DESCRIPTION,
+      		</if>
+      		CREATETIME,
+      		<if test="@Ognl@isNotEmpty(startstandardip)">
+      			STARTSTANDARDIP,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(endstandardip)">
+      			ENDSTANDARDIP,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(verifyipaddr)">
+      			VERIFYIPADDR,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(updatepwdcount)">
+      			UPDATEPWDCOUNT,
+      		</if>
+      </trim>
+      Values
+      <trim prefix="(" suffix=")" suffixOverrides="," >      
+      		<if test="@Ognl@isNotEmpty(usergroupid)">
+      			#{usergroupid},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(roleid)">
+      			#{roleid},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(loginname)">
+      			#{loginname},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(username)">
+      			#{username},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(jobnum)">
+      			#{jobnum},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(email)">
+      			#{email},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(telephone)">
+      			#{telephone},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(mobilephone)">
+      			#{mobilephone},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(password)">
+      			#{password},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(description)">
+      			#{description},
+      		</if>
+      		now(),
+      		<if test="@Ognl@isNotEmpty(startstandardip)">
+      			#{startstandardip},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(endstandardip)">
+      			#{endstandardip},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(verifyipaddr)">
+      			#{verifyipaddr},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(updatepwdcount)">
+      			#{updatepwdcount},
+      		</if>
+      </trim>      
+	  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="userid" >
+			      SELECT LAST_INSERT_ID();
+	  </selectKey>  
+  </insert>  
+  
+	<update id="update" parameterType="TsysUser">
+        UPDATE T_SYS_USER
+        <set> 
+      			LOGINNAME=#{loginname},
+      			USERGROUPID=#{usergroupid},
+      			ROLEID=#{roleid},
+      			USERNAME=#{username},
+      			JOBNUM=#{jobnum},
+      			EMAIL=#{email},
+      			TELEPHONE=#{telephone},
+      			MOBILEPHONE=#{mobilephone},
+      		<if test="@Ognl@isNotEmpty(password)">
+      			PASSWORD=#{password},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(updatepwdcount)">
+      			UPDATEPWDCOUNT=#{updatepwdcount},
+      		</if>
+      			DESCRIPTION=#{description},
+      			STARTSTANDARDIP=#{startstandardip},
+      			ENDSTANDARDIP=#{endstandardip},
+      			VERIFYIPADDR=#{verifyipaddr},
+      		<if test="@Ognl@isNotEmpty(status)">
+      			STATUS=#{status},
+      		</if>
+        </set>
+        WHERE 
+	        USERID = #{userid} 
+	</update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        UPDATE T_SYS_USER SET STATUS=2
+        WHERE USERID=#{userid}
+    </delete>
+    
+  <select id="getById" resultType="TsysUser"  parameterType="java.lang.String">
+		SELECT <include refid="TsysUser.columns" />
+	    <![CDATA[
+		    FROM T_SYS_USER A LEFT JOIN T_SYS_USERLOGININFO D ON A.USERID=D.USERID,T_SYS_ROLE B,T_SYS_USERGROUP C
+	        WHERE 
+		        A.STATUS!=2 AND A.USERID = #{userid} AND A.ROLEID=B.ROLEID AND A.USERGROUPID=C.USERGROUPID
+	    ]]>
+	</select>
+	
+  <select id="getByLoginName" resultType="TsysUser"  parameterType="java.lang.String">
+		SELECT <include refid="TsysUser.columns" />
+	    <![CDATA[
+		    FROM T_SYS_USER A LEFT JOIN T_SYS_USERLOGININFO D ON A.USERID=D.USERID,T_SYS_ROLE B,T_SYS_USERGROUP C
+	        WHERE 
+		        LOGINNAME = #{loginname}  AND A.ROLEID=B.ROLEID AND A.USERGROUPID=C.USERGROUPID AND A.STATUS!=2
+	    ]]>
+	</select>
+	
+	<select id="getUserByName" resultType="TsysUser"  parameterType="java.lang.String">
+		SELECT A.USERID ,A.USERGROUPID ,A.ROLEID ,A.LOGINNAME ,A.USERNAME ,A.JOBNUM ,A.EMAIL ,
+        A.TELEPHONE,A.MOBILEPHONE,A.IPADDRESS,A.POLICYID,A.PASSWORD,A.DESCRIPTION,
+        A.STATUS,A.ISSYSDEFAULT,A.CREATETIME,A.LASTLOGINTIME,
+        A.THEMETYPE,A.PREFIX,A.STARTSTANDARDIP,A.ENDSTANDARDIP,A.VERIFYIPADDR,A.UPDATEPWDCOUNT
+	    FROM T_SYS_USER A
+        WHERE A.USERNAME = #{username} AND A.STATUS!=2
+	</select>
+	
+	<select id="getUserById" resultType="TsysUser"  parameterType="java.lang.String">
+		SELECT A.USERID ,A.USERGROUPID ,A.ROLEID ,A.LOGINNAME ,A.USERNAME ,A.JOBNUM ,A.EMAIL ,
+        A.TELEPHONE,A.MOBILEPHONE,A.IPADDRESS,A.POLICYID,A.PASSWORD,A.DESCRIPTION,
+        A.STATUS,A.ISSYSDEFAULT,A.CREATETIME,A.LASTLOGINTIME,
+        A.THEMETYPE,A.PREFIX,A.STARTSTANDARDIP,A.ENDSTANDARDIP,A.VERIFYIPADDR,A.UPDATEPWDCOUNT
+	    FROM T_SYS_USER A
+        WHERE A.USERID = #{userid} AND A.STATUS!=2
+	</select>
+	
+	<sql id="TsysUser.findPage.where">
+		<where>	      			
+			AND A.STATUS!=2	
+	       <if test="@Ognl@isNotEmpty(userid)">
+				AND A.USERID = #{userid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(roleid)">
+				AND A.ROLEID = #{roleid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(usergroupid)">
+				AND A.USERGROUPID = #{usergroupid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(loginname)">
+				AND A.LOGINNAME = #{loginname}
+			</if>
+	       <if test="@Ognl@isNotEmpty(username)">
+				AND A.USERNAME = #{username}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(jobnum)">
+				AND A.JOBNUM = #{jobnum}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(email)">
+				AND A.EMAIL = #{email}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(telephone)">
+				AND A.TELEPHONE = #{telephone}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(mobilephone)">
+				AND A.MOBILEPHONE = #{mobilephone}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(ipaddress)">
+				AND A.IPADDRESS = #{ipaddress}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(policyid)">
+				AND A.POLICYID = #{policyid}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(password)">
+				AND A.PASSWORD = #{password}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(description)">
+				AND A.DESCRIPTION = #{description}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(status)">
+				AND A.STATUS = #{status}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(issysdefault)">
+				AND A.ISSYSDEFAULT = #{issysdefault}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(createtime)">
+				AND A.CREATETIME = #{createtime}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(lastlogintime)">
+				AND A.LASTLOGINTIME = #{lastlogintime}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(themetype)">
+				AND A.THEMETYPE = #{themetype}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(prefix)">
+				AND A.PREFIX = #{prefix}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(startstandardip)">
+				AND A.STARTSTANDARDIP = #{startstandardip}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(endstandardip)">
+				AND A.ENDSTANDARDIP = #{endstandardip}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(verifyipaddr)">
+				AND A.VERIFYIPADDR = #{verifyipaddr}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(rolecategory) and rolecategory == 1">
+				AND B.ROLECATEGORY IN (1,3,5)
+		   </if>
+	       <if test="@Ognl@isNotEmpty(rolecategory) and rolecategory == 2">
+				AND B.ROLECATEGORY IN (2,4)
+		   </if>
+	       <if test="@Ognl@isNotEmpty(loginnameSch)">
+				AND UPPER(A.LOGINNAME) LIKE UPPER(CONCAT('%',#{loginnameSch},'%'))
+			</if>
+	       <if test="@Ognl@isNotEmpty(usernameSch)">
+				AND UPPER(A.USERNAME) LIKE UPPER(CONCAT('%',#{usernameSch},'%'))
+		   </if>
+	       <if test="@Ognl@isNotEmpty(excludeId)">
+				AND A.USERID != #{excludeId}
+		   </if>
+			 AND A.ROLEID=B.ROLEID AND A.USERGROUPID=C.USERGROUPID
+		</where>
+	</sql>
+	
+  <select id="count" resultType="java.lang.Long" parameterType="java.util.HashMap">
+      SELECT count(*) FROM T_SYS_USER A,T_SYS_ROLE B,T_SYS_USERGROUP C
+			<include refid="TsysUser.findPage.where"/>    
+  </select>
+  
+  <select id="find" resultType="TsysUser"  parameterType="java.util.HashMap">
+    	SELECT <include refid="TsysUser.columns" />
+	    FROM T_SYS_USER A LEFT JOIN T_SYS_USERLOGININFO D ON A.USERID=D.USERID,T_SYS_ROLE B,T_SYS_USERGROUP C
+		<include refid="TsysUser.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>		
+  </select>		
+
+  <select id="findAll" resultType="TsysUser"  parameterType="java.util.HashMap">
+    	SELECT <include refid="TsysUser.columns" />
+	    FROM T_SYS_USER A LEFT JOIN T_SYS_USERLOGININFO D ON A.USERID=D.USERID,T_SYS_ROLE B,T_SYS_USERGROUP C
+		WHERE A.ROLEID=B.ROLEID AND A.USERGROUPID=C.USERGROUPID
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>		
+  </select>		
+        
+</mapper>

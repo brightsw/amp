@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    background: url(../img/login/_bj.png);
+    background-repeat: repeat;
+}
+
+a {
+    display: block;
+}
+
+.box {
+	height: 280px;
+	left: 50%;
+	margin-left: -272px;
+	margin-top: -200px;
+	position: absolute;
+	top: 50%;
+	width: 544px;
+	/* border: 1px #dfdede solid; */
+	/* background: url(../img/login/login_bj.png); */
+	background:#FFF;
+	-webkit-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 10px 25px rgba(0, 0, 0, 0.5);
+    box-shadow:-31px 32px 53px rgba(0, 0, 0, .2);
+}
+
+.box .form-group-custom {
+  margin-bottom: 15px!important;
+}
+
+#loginDiv {
+	padding-top:20px;
+}
+
+.logo {
+    margin-top: 15px;
+    margin-left: 30px;
+    float: left
+}
+
+.bt {
+    font-size: 26px;
+    font-family: "Microsoft YaHei";
+    color: rgb(51, 51, 51);
+    margin-top: 18px;
+    margin-left: 30px;
+    float: left
+}
+
+.col-md-5.login-font {
+    width: 28%;
+	}
+	
+.col-md-2 a{
+	font-size:13px;
+	margin-top:4px;
+	margin-left:6px;
+	text-decoration: none;
+	font-weight:bold;
+	
+	}	
+.login-font {
+	font-size: 12px;
+    font-family: "Microsoft YaHei";
+    font-weight:normal;
+    color: #666;
+}
+
+input {
+	height: 24px!important;
+	border-radius:0px!important;
+}
+
+.login {
+    background: url(../img/login/butten.png) no-repeat;
+    color: #FFF;
+    margin-left: 210px;
+    width: 96px;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    text-decoration: none;
+    height: 18px;
+    line-height: 18px;
+}
+
+.bottom {
+    font-size: 12px;
+    font-family: "Arial";
+    color: rgb(153, 153, 153);
+    width: 286px;
+    margin: auto;
+    text-align:center;
+    margin-top: 10px
+}
+
+.login:hover {
+    background: url(../img/login/butten_1.png) no-repeat;
+}
+
+.licenceinput{
+	display: block;
+    width: 100%;
+    height: 27px;
+    padding: 6px 0px;
+    font-size: 11px;
+    line-height: 1.18571429;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+}
+
+.licence_box{
+	margin-top: 32px;
+}

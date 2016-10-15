@@ -1,0 +1,51 @@
+<div class="hide" >
+	<div class="layoutSelect">
+		<ul>
+			<li>
+				<a href="" ng-click="addRowLayout(1);"><div class="widget-add1"></div></a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowLayout(2);"><div class="widget-add2"></div> </a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowLayout(3);"><div class="widget-add3"></div> </a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowLayout(4);"><div class="widget-add4"></div> </a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowLayout(5);"><div class="widget-add5"></div> </a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowLayout(6);"><div class="widget-add6"></div> </a>
+			</li>
+		</ul>
+	</div>
+	<div class="rowSelect">
+		<ul>
+			<li>
+				<a href="" ng-click="addRowSelect(1);"><div class="row-add1"></div></a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowSelect(2);"><div class="row-add2"></div> </a>
+			</li>
+			<li>
+			    <a href="" ng-click="addRowSelect(3);"><div class="row-add3"></div> </a>
+			</li>
+		</ul>
+	</div>
+	<div class="widgetSelect">
+		<div class="tabs-left">
+			<ul class="nav nav-tabs tabs-left" id="widgetpagetypeTab">
+				<li ng-class="$first?'active':''" ng-repeat="typeA in dsbWidgetPageTypeList">
+					<a href="#type{{typeA.widgetpagetypeid}}" data-toggle="tab" ng-click="switchWidgetTab(typeA.widgetpagetypeid)" rel="{{typeA.widgetpagetypeid}}">{{typeA.widgetpagetypename}}</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane" ng-class="$first?'active':''"  id="type{{typeB.widgetpagetypeid}}" ng-repeat="typeB in dsbWidgetPageTypeList">
+					<div class="slideshow wpt{{typeB.widgetpagetypeid}}" id="multiple_slides_visible"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

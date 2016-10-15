@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.com.bright.amp.authc.model.TsysModule">
+    <resultMap id="TsysModule" type="TsysModule">
+        <id column="MODID" property="modid" />
+        <result column="MODNAME" property="modname" />
+        <result column="MODLEVEL" property="modlevel" />
+        <result column="PARENTID" property="parentid" />
+        <result column="URL" property="url" />
+        <result column="MODCODE" property="modCode" />
+        <result column="ICONNAME" property="iconname" />
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="TsysModule.columns">
+        A.MODID,A.MODNAME,A.MODLEVEL,A.PARENTID,A.URL,A.MODCODE,A.ICONNAME
+    </sql>
+
+    <select id="getById" resultMap="TsysModule" parameterType="java.lang.String">
+        SELECT
+        <include refid="TsysModule.columns" />
+	    <![CDATA[
+            FROM t_sys_module a
+            WHERE 
+		        A.modId = #{modId} AND A.isValid=1
+	    ]]>
+    </select>
+    
+    <select id="getByCode" resultMap="TsysModule" parameterType="java.lang.String">
+        SELECT
+        <include refid="TsysModule.columns" />
+        <![CDATA[
+            FROM t_sys_module A
+            WHERE 
+                A.modCode = #{modCode}  AND A.isValid=1
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="TsysModule">
+    	SELECT <include refid="TsysModule.columns" /> from t_sys_module A  AND A.isValid=1
+    </select>
+    
+    <select id="find" resultType="TsysModule" parameterType="java.util.HashMap">
+    	SELECT <include refid="TsysModule.columns" /> from t_sys_module A
+            WHERE A.isValid=1
+            <choose>
+                <when test="sortColumns != null and sortColumns != ''">
+                    <![CDATA[
+                        ORDER BY ${sortColumns}
+                    ]]>
+                </when>
+                <otherwise>
+                    ORDER BY A.displayOrder
+                </otherwise>
+            </choose>
+    </select>
+    
+    <select id="count" resultType="java.lang.Long" parameterType="java.util.HashMap">
+        SELECT count(1) 
+            FROM t_sys_module A
+            WHERE A.isValid=1
+    </select>
+    	
+    <select id="getByUserId" resultType="TsysModule" parameterType="java.lang.String">
+        SELECT <include refid="TsysModule.columns" /> from t_sys_module A
+            WHERE A.isValid=1 and A.modId in (
+                SELECT distinct(B.modId) FROM t_sys_role_module B,t_sys_user C WHERE B.roleId=C.roleId
+                AND C.userId=#{userId}
+                )
+        ORDER BY A.displayOrder
+    </select>
+    
+    <select id="getTopModuleByUserId" resultType="TsysModule" parameterType="java.lang.String">
+        SELECT <include refid="TsysModule.columns" /> from t_sys_module A
+            WHERE A.isValid=1 and A.modlevel=1 and A.modId in (
+                SELECT distinct(B.modId) FROM t_sys_role_module B,t_sys_user C WHERE B.roleId=C.roleId
+                AND C.userId=#{userId}
+                )
+        ORDER BY A.displayOrder
+    </select>
+    
+    <select id="getByUserIdAndModId" resultType="TsysModule" parameterType="java.lang.String">
+        SELECT <include refid="TsysModule.columns" /> from t_sys_module A
+            WHERE A.isValid=1 
+            AND A.PARENTID = #{modId}
+            AND A.modId in (
+                SELECT distinct(B.modId) FROM t_sys_role_module B,t_sys_user C WHERE B.roleId=C.roleId
+                AND C.userId=#{userId}
+                ) 
+        ORDER BY A.displayOrder
+    </select>
+    
+    <select id="getSecondByUserIdAndModId" resultType="TsysModule" parameterType="java.lang.String">
+        SELECT <include refid="TsysModule.columns" /> from t_sys_module A
+            WHERE A.isValid=1 and A.PARENTID = #{modId} 
+            AND A.modId in (
+                SELECT distinct(B.modId) FROM t_sys_role_module B,t_sys_user C WHERE B.roleId=C.roleId
+                AND C.userId=#{userId}
+                )
+        ORDER BY A.displayOrder
+    </select>
+    
+    <select id="getByRoleId" resultType="TsysModule" parameterType="java.lang.String">
+        SELECT
+           <include refid="TsysModule.columns" />
+        <![CDATA[
+            FROM t_sys_module A,t_sys_role_module B
+            WHERE A.isValid=1 
+                AND B.roleId = #{roleId} AND A. modId = B.modId
+        ]]>
+    </select>
+        
+</mapper>

@@ -1,0 +1,58 @@
+{
+  "name": "angular-translate-loader-static-files",
+  "version": "2.8.1",
+  "description": "Creates a loading function for a typical static file url pattern: \"lang-en_US.json\", \"lang-de_DE.json\", etc. Using this builder, the response of these urls must be an object of key-value pairs.",
+  "main": "angular-translate-loader-static-files.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular-translate/bower-angular-translate-loader-static-files.git"
+  },
+  "keywords": [
+    "angular",
+    "translate",
+    "loader"
+  ],
+  "author": {
+    "name": "Pascal Precht"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angular-translate/angular-translate/issues"
+  },
+  "homepage": "https://angular-translate.github.io",
+  "dependencies": {
+    "angular-translate": "~2.8.1"
+  },
+  "gitHead": "e4cea4871fcf1cae5766808890a15775cb0eb439",
+  "_id": "angular-translate-loader-static-files@2.8.1",
+  "scripts": {},
+  "_shasum": "d23b21e5e156e7cfe64b936a33f4066846db0e65",
+  "_from": "angular-translate-loader-static-files@latest",
+  "_npmVersion": "2.14.3",
+  "_nodeVersion": "4.1.0",
+  "_npmUser": {
+    "name": "knalli",
+    "email": "knallisworld@googlemail.com"
+  },
+  "maintainers": [
+    {
+      "name": "knalli",
+      "email": "knallisworld@googlemail.com"
+    },
+    {
+      "name": "mchambaud",
+      "email": "mchambaud@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "d23b21e5e156e7cfe64b936a33f4066846db0e65",
+    "size": 2305,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/angular-translate-loader-static-files/download/angular-translate-loader-static-files-2.8.1.tgz"
+  },
+  "directories": {},
+  "publish_time": 1443728870397,
+  "_cnpm_publish_time": 1443728870397,
+  "_resolved": "https://registry.npm.taobao.org/angular-translate-loader-static-files/download/angular-translate-loader-static-files-2.8.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

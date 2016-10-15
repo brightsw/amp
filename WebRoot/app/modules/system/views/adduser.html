@@ -1,0 +1,123 @@
+<form id="dataForm" name="dataForm" user-form-validator callback="ok()">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4>{{format('system.user.add')}}</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="loginname"> {{format('system.user.loginname')}}</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="loginname" name="loginname" ng-model="user.loginname" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="username"> {{format('system.user.username')}}</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="username" name="username" ng-model="user.username"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="password">{{format('system.user.password')}} </label>
+                <input type="password" class="form-control" placeholder="{{format('common.valid.required')}}" id="password" name="password" ng-model="user.password"/>
+                <p class="note">
+					{{format('system.user.minlength')}}[{{minPwdLength}}],{{format('system.user.numminlength')}}[{{minFigureNum}}],{{format('system.user.symbolminlength')}}[{{minSpCharNum}}]
+				</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="username"> {{format('system.user.confirmpwd')}}</label>
+                <input type="password" class="form-control" placeholder="{{format('common.valid.required')}}" id="confirmPwd" name="confirmPwd" ng-model="user.confirmPwd"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="usergroupid">{{format('system.user.usergroup')}}</label>
+                <select class="form-control"  ng-model="user.usergroupid" ng-options="group.usergroupid as group.groupname for group in groups">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="roleid"> {{format('system.user.role')}}</label>
+                <select class="form-control"  ng-model="user.roleid" ng-options="role.roleid as role.rolename for role in roles">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="telephone"> {{format('system.user.tel')}}</label>
+                <input type="text" class="form-control" placeholder="" id="telephone" name="telephone" ng-model="user.telephone"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="mobilephone"> {{format('system.user.mobile')}}</label>
+                <input type="text" class="form-control" placeholder="" id="mobilephone" name="mobilephone" ng-model="user.mobilephone"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="jobnum"> {{format('system.user.jobnum')}}</label>
+                <input type="text" class="form-control" placeholder="" id="jobnum" name="jobnum" ng-model="user.jobnum"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email"> {{format('system.user.email')}}</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="email" name="email" ng-model="user.email"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <label class="control-label">{{format('system.user.validip')}}</label>
+                    </div>
+                    <div class="col-sm-12 col-md-10">
+                        <label class="checkbox checkbox-inline no-margin">
+                            <input type="checkbox" name="verifyipcheckbox" id="verifyipcheckbox" class="checkbox style-2" ng-model="user.verifyipaddr"  ng-true-value="1" ng-false-value="0" ng-change="changeVerify()"/>
+                            <span></span> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="startstandardip">{{format('system.user.startip')}}</label>
+                <input type="text" class="form-control" placeholder="" id="startstandardip" name="startstandardip" ng-disabled="user.verifyipaddr==0" ng-model="user.startstandardip"/>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="endstandardip">{{format('system.user.endip')}}</label>
+                <input type="text" class="form-control" placeholder="" id="endstandardip" name="endstandardip" ng-disabled="user.verifyipaddr==0" ng-model="user.endstandardip"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="description"> {{format('system.user.desc')}}</label>
+                <textarea class="form-control" placeholder="{{format('common.valid.max200char')}}" rows="5" id="description" name="description" ng-model="user.description"/></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default">{{format('common.button.submit')}}</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">{{format('common.button.close')}}</button>
+</div>
+</form>

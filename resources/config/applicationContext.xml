@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+    default-lazy-init="true">
+    <context:component-scan base-package="com.com.bright.amp" />
+
+	  <bean class="com.com.bright.amp.core.database.DBPropertyPlaceholderConfigurer">
+	    <property name="locations">
+	      <list>
+	        <value>classpath:config/jdbcConfig.properties</value>
+	      </list>
+	    </property>
+	  </bean>
+    <!-- Spring工具类，通过ApplicationContextAware接口自动注入ApplicationContext -->
+    <bean id="SpringUtils" class="com.polydata.framework.core.spring.SpringUtils" lazy-init="false" />
+
+    <!-- 异步线程池专用 -->
+    <bean id="springBeanUtil" class="com.googlecode.asyn4j.spring.AsynSpringUtil" lazy-init="false">
+    </bean>
+
+    <bean id="asynService" class="com.googlecode.asyn4j.spring.AsynServiceFactoryBean" lazy-init="false">
+        <!--设置自定义相关参数 -->
+        <property name="maxCacheWork" value="100"></property>
+        <property name="addWorkWaitTime" value="2000"></property>
+        <property name="workThreadNum" value="3"></property>
+        <property name="callbackThreadNum" value="2"></property>
+        <property name="closeServiceWaitTime" value="2000"></property>
+        <!--添加相关处理器 -->
+        <property name="errorAsynWorkHandler">
+            <bean class="com.googlecode.asyn4j.core.handler.DefaultErrorAsynWorkHandler" />
+        </property>
+    </bean>
+
+    <!-- 设置数据库会话工厂 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="plugins">
+            <list>
+                <bean class="com.polydata.framework.core.dao.ibatis.plugin.PagePlugin">
+                    <property name="dialect">
+                        <ref bean="${dialect}Dialect" />
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="mapperLocations" value="classpath*:sqlmap/**/${dialect}/*Mapper.xml" />
+        <property name="typeAliasesPackage" value="
+			        com.com.bright.amp.user.model,
+			        com.com.bright.amp.log.model,
+			        com.com.bright.amp.authc.model,
+			        com.com.bright.amp.system.model"
+			        />
+    </bean>
+
+    <bean id="mysqlDialect" class="com.polydata.framework.core.dao.ibatis.dialect.MySQLDialect" />
+    <bean id="postgressDialect" class="com.polydata.framework.core.dao.ibatis.dialect.PostgreSQLDialect" />
+    <bean id="oracleDialect" class="com.polydata.framework.core.dao.ibatis.dialect.OracleDialect" />
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="myBatisSessionManager" class="com.polydata.framework.core.dao.MyBatisSessionManager">
+        <property name="sessionMap">
+            <map>
+                <entry key="default" value-ref="sqlSession" />
+            </map>
+        </property>
+    </bean>
+
+
+    <!-- 事务配置 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- AOP控制DB事务管理 -->
+    <aop:config proxy-target-class="true">
+        <aop:pointcut
+            expression="execution(* com.com.bright.amp..service.*Service.*(..))"
+            id="serviceTx" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceTx" />
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="del*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="update*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="post*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="edit*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="change*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="save*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="add*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="import*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="upload*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="remove*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="create*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="modify*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="call*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="run*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="login*" rollback-for="java.lang.Exception" />
+            <tx:method name="reset*" rollback-for="java.lang.Exception" />
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    
+    <!-- 将我自己定义的拦截器生成bean -->
+    <!-- 
+    <bean id="methodServiceAdvisor" class="com.polydata.framework.core.aop.advice.ServiceAdvice"/>
+    
+    <aop:config-->
+        <!--配置规则，满足以下规则的将拦截，第一个*表示所有返回类型，第二个表示service包下的所有class，第三个表示所有方法-->
+        <!-- aop:pointcut id="baseServiceMethods" expression="execution(* com.com.bright.amp.*.service.*.*(..))"/ -->
+        <!-- 符合上面规则的拦截器都会调用到methodServiceAdvisor -->
+        <!-- aop:advisor advice-ref="methodServiceAdvisor" pointcut-ref="baseServiceMethods"/>
+    </aop:config>
+     -->
+    <!-- 
+    <bean id="log4jdbcInterceptor" class="net.sf.log4jdbc.DataSourceSpyInterceptor" />
+
+    <bean id="dataSourceLog4jdbcAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>log4jdbcInterceptor</value>
+            </list>
+        </property>
+        <property name="beanNames">
+            <list>
+                <value>dataSource</value>
+            </list>
+        </property>
+    </bean>
+     -->
+	 
+    <!-- <bean id="traceInterceptor" class="com.polydata.framework.core.trace.TraceInterceptor"></bean> <aop:config> <aop:pointcut id="tracePoint" expression="execution(* com.com.bright.amp.service.user.impl.*(..))" 
+        /> <aop:advisor pointcut-ref="tracePoint" advice-ref="traceInterceptor" order="200" /> </aop:config> <aop:config> <aop:pointcut expression="@within(com.polydata.framework.core.spring.Dao)" id="logProfilePointcut" 
+        /> <aop:advisor advice-ref="serviceAdvice" pointcut-ref="logProfilePointcut" order="100" /> </aop:config> <bean id="serviceAdvice" class="com.polydata.framework.core.aop.advice.ServiceAdvice"></bean> 
+        <tx:annotation-driven transaction-manager="transactionManager" order="300" /> -->
+
+    <beans profile="production">
+        <context:property-placeholder ignore-unresolvable="true" location="classpath:config/*.properties" />
+
+
+        <!-- DBCP连接池 -->
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+            <property name="driverClassName">
+                <value>${jdbc.driver}</value>
+            </property>
+            <property name="url">
+                <value>${jdbc.url}</value>
+            </property>
+            <property name="username">
+                <value>${jdbc.username}</value>
+            </property>
+            <property name="password">
+                <value>${jdbc.password}</value>
+            </property>
+            <!-- 初始化连接 -->
+            <property name="initialSize">
+                <value>${jdbc.initialsize}</value>
+            </property>
+            <!-- 最大连接数量 -->
+            <property name="maxActive">
+                <value>${jdbc.maxactive}</value>
+            </property>
+            <!-- 最大空闲连接 -->
+            <property name="maxIdle">
+                <value>${jdbc.maxidle}</value>
+            </property>
+            <!-- 最小空闲连接 -->
+            <property name="minIdle">
+                <value>${jdbc.minidle}</value>
+            </property>
+            <!-- 是否在自动回收超时连接的时候打印连接的超时错误 -->
+            <property name="logAbandoned">
+                <value>${jdbc.logabandoned}</value>
+            </property>
+            <!-- 是否自动回收超时连接 -->
+            <property name="removeAbandoned">
+                <value>${jdbc.removeabandoned}</value>
+            </property>
+            <!-- 超时时间(以s为单位) -->
+            <property name="removeAbandonedTimeout">
+                <value>${jdbc.removeabandonedtimeout}</value>
+            </property>
+            <!-- 超时等待时间（以ms为单位） -->
+            <property name="maxWait">
+                <value>${jdbc.maxwait}</value>
+            </property>
+            <!-- 增加配置 -->
+			<property name="validationQuery">
+				<value>select count(*) from dual</value>
+			</property>
+			<property name= "testWhileIdle" >
+				<value>true</value>
+			</property>
+			<!-- 失效检查线程运行时间间隔 -->
+			<property name= "timeBetweenEvictionRunsMillis" >
+				<value>3600000</value>
+			</property>
+			<!-- 连接空闲时间判断 -->
+			<property name= "minEvictableIdleTimeMillis" >
+				<value>18000000</value>
+			</property>
+			<property name= "testOnBorrow" >
+				<value>true</value>
+			</property>
+        </bean>
+    </beans>
+
+
+</beans>
+

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.com.bright.amp.user.model.TsysUserLoginInfo">
+    <resultMap id="TsysUserLoginInfo" type="TsysUserLoginInfo">
+        <id column="LOGINID" property="loginid"  />
+        <result column="USERID" property="userid"  />
+        <result column="LASTLOGINTIME" property="lastlogintime"  />
+        <result column="LASTLOGINIP" property="lastloginip"  />
+        <result column="LASTLOGINFAILTIME" property="lastloginfailtime"  />
+        <result column="LASTLOGINFAILIP" property="lastloginfailip"  />
+        <result column="AVAILLOGINFAILCOUNT" property="availloginfailcount" />
+        <result column="LASTLOCKTIME" property="lastlocktime" />
+        <result column="SUCCESSCOUNT" property="successcount" />
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="TsysUserLoginInfo.columns">
+        LOGINID ,USERID ,LASTLOGINTIME ,LASTLOGINIP ,LASTLOGINFAILTIME ,LASTLOGINFAILIP ,AVAILLOGINFAILCOUNT ,LASTLOCKTIME,SUCCESSCOUNT
+    </sql>
+
+    <select id="getById" resultMap="TsysUserLoginInfo" parameterType="java.lang.Long">
+        SELECT
+        <include refid="TsysUserLoginInfo.columns" />
+        <![CDATA[
+            FROM T_SYS_USERLOGININFO
+            WHERE 
+                LOGINID = #{loginid}
+        ]]>
+    </select>
+    
+    <select id="getByUserId" resultMap="TsysUserLoginInfo" parameterType="java.lang.Long">
+        SELECT
+        <include refid="TsysUserLoginInfo.columns" />
+        <![CDATA[
+            FROM T_SYS_USERLOGININFO
+            WHERE 
+                USERID = #{userid}
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="TsysUserLoginInfo">
+        INSERT INTO  T_SYS_USERLOGININFO (
+        USERID ,LASTLOGINTIME ,LASTLOGINIP ,LASTLOGINFAILTIME ,LASTLOGINFAILIP ,AVAILLOGINFAILCOUNT ,SUCCESSCOUNT
+        ) 
+         <![CDATA[
+            VALUES (#{userid},#{lastlogintime},#{lastloginip},
+            #{lastloginfailtime},#{lastloginfailip},#{availloginfailcount},#{successcount})
+         ]]>
+    </insert>
+    
+    <update id="update" parameterType="TsysUserLoginInfo">
+        UPDATE  T_SYS_USERLOGININFO 
+        	<set>
+	        	LASTLOGINTIME=now(),
+	        	LASTLOGINIP=#{lastloginip},
+	        	<if test="availloginfailcount != null and availloginfailcount > 0">
+	        	LASTLOGINFAILTIME=now(),
+	        	LASTLOGINFAILIP=#{lastloginfailip},
+	        	</if>
+	        	<if test="availloginfailcount == null or availloginfailcount == 0">
+	        	SUCCESSCOUNT=#{successcount},
+	        	</if>
+	        	AVAILLOGINFAILCOUNT=#{availloginfailcount},
+	        	<if test="issetlocktime != null and issetlocktime == 1">
+	        	LASTLOCKTIME=now(),
+	        	</if>
+	        	<if test="issetlocktime != null and issetlocktime == 2">
+	        	LASTLOCKTIME=null,
+	        	</if>
+        	</set> 
+            WHERE LOGINID=#{loginid}
+    </update>
+    
+    <update id="updateSuccessCount" parameterType="java.util.HashMap">
+        UPDATE  T_SYS_USERLOGININFO 
+	        SET	SUCCESSCOUNT=#{successcount}
+            WHERE USERID=#{userid}
+    </update>
+    
+    <delete id="deleteByUserId" parameterType="java.lang.String" >
+        DELETE
+        FROM T_SYS_USERLOGININFO
+        WHERE USERID=#{userid}
+    </delete>
+    
+</mapper>
