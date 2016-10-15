@@ -1,4 +1,19 @@
-﻿SET FOREIGN_KEY_CHECKS=0;
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : local
+Source Server Version : 50621
+Source Host           : localhost:3306
+Source Database       : polydata
+
+Target Server Type    : MYSQL
+Target Server Version : 50621
+File Encoding         : 65001
+
+Date: 2016-10-16 01:41:29
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for t_account
@@ -9,14 +24,19 @@ CREATE TABLE `t_account` (
   `money` int(10) NOT NULL,
   `acctype` int(2) NOT NULL,
   `accdate` date NOT NULL,
+  `accmon` varchar(255) NOT NULL,
+  `accyear` varchar(255) NOT NULL,
   `recdate` date NOT NULL,
   `recuser` int(10) NOT NULL,
   PRIMARY KEY (`gid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_account
 -- ----------------------------
+INSERT INTO `t_account` VALUES ('4', '45567', '1', '2016-10-16', '2016-10', '2016', '2016-10-16', '1');
+INSERT INTO `t_account` VALUES ('5', '81581', '2', '2016-10-16', '2016-10', '2016', '2016-10-16', '1');
+INSERT INTO `t_account` VALUES ('6', '28561', '3', '2016-10-16', '2016-10', '2016', '2016-10-16', '1');
 
 -- ----------------------------
 -- Table structure for t_accounttype
@@ -26,11 +46,14 @@ CREATE TABLE `t_accounttype` (
   `typeid` int(10) NOT NULL AUTO_INCREMENT,
   `typename` varchar(200) NOT NULL,
   PRIMARY KEY (`typeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_accounttype
 -- ----------------------------
+INSERT INTO `t_accounttype` VALUES ('1', '余额宝');
+INSERT INTO `t_accounttype` VALUES ('2', '易付宝');
+INSERT INTO `t_accounttype` VALUES ('3', '证券市值');
 
 -- ----------------------------
 -- Table structure for t_sys_log
@@ -46,7 +69,28 @@ CREATE TABLE `t_sys_log` (
   `operatorUser` varchar(300) DEFAULT NULL COMMENT '操作用户名',
   `logType` int(11) NOT NULL COMMENT '日志类型：\n            1：系统日志\n            2：用户日志',
   PRIMARY KEY (`logID`)
-) ENGINE=InnoDB AUTO_INCREMENT=68664 DEFAULT CHARSET=utf8 COMMENT='用户日志表\nWebServer：读\nBusinessManager：写 ';
+) ENGINE=InnoDB AUTO_INCREMENT=68681 DEFAULT CHARSET=utf8 COMMENT='用户日志表\nWebServer：读\nBusinessManager：写 ';
+
+-- ----------------------------
+-- Records of t_sys_log
+-- ----------------------------
+INSERT INTO `t_sys_log` VALUES ('68664', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-15 22:38:04', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68665', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-16 00:33:37', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68666', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-16 00:35:02', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68667', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-16 00:47:33', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68668', 'web', '127.0.0.1', '1', '新增账目错误', '2016-10-16 00:50:22', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68669', 'web', '127.0.0.1', '1', '新增账目错误', '2016-10-16 00:51:14', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68670', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 00:51:37', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68671', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-16 00:57:17', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68672', 'web', '127.0.0.1', '1', '修改账目成功', '2016-10-16 00:57:23', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68673', 'web', '127.0.0.1', '1', '删除账目成功', '2016-10-16 00:57:29', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68674', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 00:57:44', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68675', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 00:58:19', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68676', 'web', '127.0.0.1', '1', '删除账目成功', '2016-10-16 01:00:02', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68677', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 01:00:14', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68678', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 01:07:14', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68679', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 01:10:04', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68680', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-16 01:35:40', 'sysadmin', '2');
 
 -- ----------------------------
 -- Table structure for t_sys_module
@@ -192,4 +236,9 @@ CREATE TABLE `t_sys_userlogininfo` (
   `lastLockTime` datetime DEFAULT NULL COMMENT '最近锁定时间',
   `successCount` int(11) NOT NULL DEFAULT '0' COMMENT '用登录成功次数',
   PRIMARY KEY (`loginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户登录信息表\nWebServer：读/写 ';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户登录信息表\nWebServer：读/写 ';
+
+-- ----------------------------
+-- Records of t_sys_userlogininfo
+-- ----------------------------
+INSERT INTO `t_sys_userlogininfo` VALUES ('4', '1', '2016-10-16 01:35:40', '127.0.0.1', null, null, '0', null, '6');
