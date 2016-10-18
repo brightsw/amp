@@ -387,7 +387,7 @@
 "system.upgrade.lastupgtime": "上次更新时间",
 "system.upgrade.upgoffline": "离线更新",
 "system.upgrade.upgsource": "更新源",
-"system.upgrade.polyupgserver": "宝利九章ActiveUpdate服务器",
+"system.upgrade.polyupgserver": "",
 "system.upgrade.othersource": "其他更新源",
 "system.upgrade.conntest": "连通测试",
 "system.upgrade.startdate": "开始日期",

@@ -1,11 +1,10 @@
 login.username.input=请输入用户名
 login.success=登录成功
 message.bindingerror=参数绑定错误
-common.product.name=宝利九章安全分析管理中心平台
-common.product.license=版权所有 © 2016 宝利九章（北京）数据技术有限公司
-common.company.name=宝利九章（北京）数据技术有限公司
+common.product.name=账目管理系统
+common.product.license=
+common.company.name=
 common.product.version=v2
-common.product.warning此软件受版权法和国际条约的保护。未经授权复制或传播此程序，或此程序的任何部分，将可能遭到严厉的民事和刑事处罚，并将受到法律范围内最大限度的严惩.
 dashboard.incidentLevelDist.success=显示告警严重级别分布成功
 dashboard.incidentCategoryDist.success=显示告警类别分布成功
 dashboard.incidentNameDist.success=显示告警按名称分布成功
