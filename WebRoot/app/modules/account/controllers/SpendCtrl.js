@@ -105,7 +105,7 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
          });
 
          $scope.deleteSpend = function(type,gid){
-            var dlg = dialogs.confirm("删除资金明细","确认删除所选资金明细吗？",{size:'sm',windowClass: 'dia-custom-top'});
+            var dlg = dialogs.confirm("删除支出明细","确认删除所选支出明细吗？",{size:'sm',windowClass: 'dia-custom-top'});
             dlg.result.then(function(btn){
                 var selectids = new Array();
                 if(type == 1){
@@ -125,10 +125,10 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                           if(retMsg[0] == "success"){
                               $("#searchBut").click();
                           }else{
-                             dialogs.notify("删除资金明细失败",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
+                             dialogs.notify("删除支出明细失败",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
                           }
                         }else{
-                        	dialogs.notify("删除资金明细失败","删除资金明细失败",{size:'sm',windowClass: 'dia-custom-top'});              
+                        	dialogs.notify("删除支出明细失败","删除支出明细失败",{size:'sm',windowClass: 'dia-custom-top'});              
                         }
                     },function(data){
                         
@@ -183,14 +183,14 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                         $modalInstance.close();
                         $("#searchBut").click();
                     }else{
-                       var dlg = dialogs.notify("新增资金明细",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("新增支出明细",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){
                        });                         
                     }
                   }else{
-                       var dlg = dialogs.notify("新增资金明细","新增资金明细失败",{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("新增支出明细","新增支出明细失败",{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){
@@ -255,14 +255,14 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                         $modalInstance.close();
                         $("#searchBut").click();
                     }else{
-                       var dlg = dialogs.notify("修改资金明细",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("修改支出明细",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){
                        });                          
                     }
                   }else{
-                       var dlg = dialogs.notify("修改资金明细","修改资金明细失败",{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("修改支出明细","修改支出明细失败",{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){

@@ -22,7 +22,7 @@
     </sql>
 
   <insert id="insert" parameterType="Tspend">
-      INSERT INTO T_ACCOUNT
+      INSERT INTO T_SPEND
       <trim prefix="(" suffix=")" suffixOverrides="," >
       			MONEY,
       			ACCTYPE,
@@ -50,7 +50,7 @@
   </insert>  
   
 	<update id="update" parameterType="Tspend">
-        UPDATE T_ACCOUNT
+        UPDATE T_SPEND
         <set> 
       			MONEY=#{money},
       			ACCTYPE=#{acctype},
@@ -66,7 +66,7 @@
 	</update>
     
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE from T_ACCOUNT
+        DELETE from T_SPEND
         WHERE GID=#{gid}
     </delete>
     
