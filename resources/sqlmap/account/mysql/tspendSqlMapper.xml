@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.bright.amp.account.model.Tspend">
+    <resultMap id="Tspend" type="Tspend">
+        <id column="GID" property="gid" />
+        <result column="MONEY" property="money" />
+        <result column="ACCTYPE" property="acctype" />
+        <result column="ACCDATE" property="accdate" />
+        <result column="ACCMON" property="accmon" />
+        <result column="ACCYEAR" property="accyear" />
+        <result column="RECDATE" property="recdate" />
+        <result column="RECUSER" property="recuser" />
+        <result column="USERNAME" property="username" />
+        <result column="TYPENAME" property="typename" />
+        <result column="DESCRIPTION" property="description" />
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="Tspend.columns">
+        A.GID,A.MONEY ,A.ACCTYPE ,A.ACCDATE ,A.RECDATE ,A.ACCMON,A.ACCYEAR,A.RECUSER ,A.DESCRIPTION,B.TYPENAME ,C.USERNAME
+    </sql>
+
+  <insert id="insert" parameterType="Tspend">
+      INSERT INTO T_ACCOUNT
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+      			MONEY,
+      			ACCTYPE,
+      			ACCDATE,
+      			ACCMON,
+      			ACCYEAR,
+      			RECDATE,
+      			RECUSER,
+      			DESCRIPTION,
+      </trim>
+      Values
+      <trim prefix="(" suffix=")" suffixOverrides="," >      
+      			#{money}, 
+      			#{acctype}, 
+      			#{accdate}, 
+      			#{accmon}, 
+      			#{accyear}, 
+      			curdate(), 
+      			#{recuser},
+      			#{description},
+      </trim>      
+	  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="gid" >
+			      SELECT LAST_INSERT_ID();
+	  </selectKey>  
+  </insert>  
+  
+	<update id="update" parameterType="Tspend">
+        UPDATE T_ACCOUNT
+        <set> 
+      			MONEY=#{money},
+      			ACCTYPE=#{acctype},
+      			ACCDATE=#{accdate},
+      			ACCMON=#{accmon},
+      			ACCYEAR=#{accyear},
+      			RECDATE=curdate(),
+      			RECUSER=#{recuser},
+      			DESCRIPTION=#{description},
+        </set>
+        WHERE 
+	        GID = #{gid} 
+	</update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE from T_ACCOUNT
+        WHERE GID=#{gid}
+    </delete>
+    
+  <select id="getById" resultType="Tspend"  parameterType="java.lang.Integer">
+		SELECT <include refid="Tspend.columns" />
+	    <![CDATA[
+		    FROM T_SPEND A,T_ACCOUNTTYPE B,T_SYS_USER C
+	        WHERE 
+		        A.ACCTYPE=B.TYPEID AND A.RECUSER=C.USERID AND A.GID = #{gid} 
+	    ]]>
+	</select>
+	
+	<sql id="Tspend.findPage.where">
+		<where>	      			
+		   AND A.ACCTYPE=B.TYPEID AND A.RECUSER=C.USERID
+	       <if test="@Ognl@isNotEmpty(gid)">
+				AND A.GID = #{gid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(money)">
+				AND A.MONEY = #{money}
+			</if>
+	       <if test="@Ognl@isNotEmpty(acctype)">
+				AND A.ACCTYPE = #{acctype}
+			</if>
+	       <if test="@Ognl@isNotEmpty(accdate)">
+				AND A.ACCDATE = #{accdate}
+			</if>
+	       <if test="@Ognl@isNotEmpty(accyear)">
+				AND A.ACCYEAR = #{accyear}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(recdate)">
+				AND A.RECDATE = #{recdate}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(recuser)">
+				AND A.RECUSER = #{recuser}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(accdateBegin)">
+				AND A.ACCDATE >= #{accdateBegin}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(accdateEnd)">
+	       		<![CDATA[
+				AND A.ACCDATE <= #{accdateEnd}
+				]]>
+		   </if>
+	       <if test="@Ognl@isNotEmpty(moneyBegin)">
+				AND A.MONEY >= #{moneyBegin}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(moneyEnd)">
+	       		<![CDATA[
+				AND A.MONEY <= #{moneyEnd}
+				]]>
+		   </if>
+		</where>
+	</sql>
+	
+  <select id="count" resultType="java.lang.Long" parameterType="java.util.HashMap">
+      SELECT count(*) FROM T_SPEND A,T_ACCOUNTTYPE B,T_SYS_USER C
+			<include refid="Tspend.findPage.where"/>    
+  </select>
+  
+  <select id="find" resultType="Tspend"  parameterType="java.util.HashMap">
+    	SELECT <include refid="Tspend.columns" />
+	    FROM T_SPEND A,T_ACCOUNTTYPE B,T_SYS_USER C
+		<include refid="Tspend.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>		
+		<if test="@Ognl@isEmpty(sortColumns)">
+			ORDER BY A.RECDATE DESC
+		</if>		
+  </select>		
+
+  <select id="findAll" resultType="Tspend"  parameterType="java.util.HashMap">
+    	SELECT <include refid="Tspend.columns" />
+	    FROM T_SPEND A,T_ACCOUNTTYPE B,T_SYS_USER C
+		WHERE A.ACCTYPE=B.TYPEID AND A.RECUSER=C.USERID
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>		
+  </select>		
+        
+</mapper>

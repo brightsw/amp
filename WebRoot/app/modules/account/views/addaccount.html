@@ -1,7 +1,7 @@
 <form id="dataForm" name="dataForm" account-form-validator callback="ok()">
 <div class="modal-header">
     <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
-    <h4>新增账目</h4>
+    <h4>新增资金明细</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -17,7 +17,8 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="username">日期</label>
-                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="accdate" name="accdate" ng-model="account.accdate"/>
+                <input class='form-control' type='text' id='accdate' name='accdate' ng-model="account.accdate" onkeydown="return false;" 
+					 placeholder="{{format('common.valid.required')}}" data-smart-datepicker data-date-format="yy-mm-dd">
             </div>
         </div>
     </div>
@@ -26,6 +27,14 @@
             <div class="form-group">
                 <label for="username">金额</label>
                 <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="money" name="money" ng-model="account.money"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="description">备注</label>
+                <textarea class="form-control" placeholder="{{format('common.valid.max200char')}}" rows="5" id="description" name="description" ng-model="account.description"/></textarea>
             </div>
         </div>
     </div>

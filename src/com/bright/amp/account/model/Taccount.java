@@ -6,25 +6,27 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("Taccount")
 public class Taccount {
-    private Integer gid;
-    
-    private Integer money;
+	private Integer gid;
 
-    private Integer acctype;
+	private Integer money;
 
-    private String accdate;
+	private Integer acctype;
 
-    private String accmon;
+	private String accdate;
 
-    private String accyear;
+	private String accmon;
 
-    private Date recdate;
-    
-    private Integer recuser;
-    
-    private String username;
-    
-    private String typename;
+	private String accyear;
+
+	private Date recdate;
+
+	private Integer recuser;
+
+	private String username;
+
+	private String typename;
+
+	private String description;
 
 	public Integer getGid() {
 		return gid;
@@ -105,5 +107,13 @@ public class Taccount {
 	public void setTypename(String typename) {
 		this.typename = typename;
 	}
-    
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

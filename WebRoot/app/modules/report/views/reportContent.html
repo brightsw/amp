@@ -1,0 +1,16 @@
+<div class="jarviswidget" id="wid-report-id-0" data-widget-editbutton="false" data-widget-deletebutton="false"
+	data-widget-colorbutton="false" data-widget-fullscreenbutton="false">
+	<header>
+		<span class="widget-icon"> <i class="fa fa-lg fa-bar-chart-o"></i> </span>
+		<h2>
+			{{format('report.list.chart')}}
+		</h2>
+	</header>
+	<div>
+		<div>
+			<div class="col-md-12">
+				<high-chart id="container" data="{{templateid}}" type="{{type}}" time="{{params}}" granularity="{{granularity}}" style="height:600px"></high-chart>
+			</div>
+		</div>
+	</div>
+</div>

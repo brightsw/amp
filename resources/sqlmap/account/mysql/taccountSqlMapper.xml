@@ -13,11 +13,12 @@
         <result column="RECUSER" property="recuser" />
         <result column="USERNAME" property="username" />
         <result column="TYPENAME" property="typename" />
+        <result column="DESCRIPTION" property="description" />
     </resultMap>
 
     <!-- 用于select查询公用抽取的列 -->
     <sql id="Taccount.columns">
-        A.GID,A.MONEY ,A.ACCTYPE ,A.ACCDATE ,A.RECDATE ,A.ACCMON,A.ACCYEAR,A.RECUSER ,B.TYPENAME ,C.USERNAME
+        A.GID,A.MONEY ,A.ACCTYPE ,A.ACCDATE ,A.RECDATE ,A.ACCMON,A.ACCYEAR,A.RECUSER ,A.DESCRIPTION,B.TYPENAME ,C.USERNAME
     </sql>
 
   <insert id="insert" parameterType="Taccount">
@@ -30,6 +31,7 @@
       			ACCYEAR,
       			RECDATE,
       			RECUSER,
+      			DESCRIPTION,
       </trim>
       Values
       <trim prefix="(" suffix=")" suffixOverrides="," >      
@@ -40,6 +42,7 @@
       			#{accyear}, 
       			curdate(), 
       			#{recuser},
+      			#{description},
       </trim>      
 	  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="gid" >
 			      SELECT LAST_INSERT_ID();
@@ -56,6 +59,7 @@
       			ACCYEAR=#{accyear},
       			RECDATE=curdate(),
       			RECUSER=#{recuser},
+      			DESCRIPTION=#{description},
         </set>
         WHERE 
 	        GID = #{gid} 

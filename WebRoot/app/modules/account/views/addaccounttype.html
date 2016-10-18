@@ -1,0 +1,50 @@
+<form id="dataForm" name="dataForm" accounttype-form-validator callback="ok()">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4>新增账目类别</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <label class="control-label">应用范围</label>
+                    </div>
+                    <div class="col-sm-12 col-md-10">
+                        <label class="checkbox checkbox-inline no-margin">
+                            <input type="checkbox" name="capitaluse" id="capitaluse" class="checkbox style-2" ng-model="accounttype.capitaluse"  ng-true-value="1" ng-false-value="0"/>
+                            <span>资金</span> </label>
+                        <label class="checkbox checkbox-inline no-margin">
+                            <input type="checkbox" name="incomeuse" id="incomeuse" class="checkbox style-2" ng-model="accounttype.incomeuse"  ng-true-value="1" ng-false-value="0"/>
+                            <span>收入</span> </label>
+                        <label class="checkbox checkbox-inline no-margin">
+                            <input type="checkbox" name="spenduse" id="spenduse" class="checkbox style-2" ng-model="accounttype.spenduse"  ng-true-value="1" ng-false-value="0"/>
+                            <span>支出</span> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">名称</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="typename" name="typename" ng-model="accounttype.typename"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="description">备注</label>
+                <textarea class="form-control" placeholder="{{format('common.valid.max200char')}}" rows="5" id="description" name="description" ng-model="accounttype.description"/></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default">{{format('common.button.submit')}}</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">{{format('common.button.close')}}</button>
+</div>
+</form>

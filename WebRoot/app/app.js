@@ -57,7 +57,8 @@ define([
         'app.backButton',
         //email
         'app.system',
-        'app.account'
+        'app.account',
+        'app.report'
     ]);
 
     couchPotato.configureApp(app);

@@ -9,7 +9,7 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                  //console.log("search");
              };
 
-             httpService.get('getAccountTypes.do')
+             httpService.get('getAccountTypes.do',{"capitaluse":1})
                 .then(function(data){
                     $scope.acctypes = data;
                 },function(data){
@@ -89,6 +89,7 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                         {"mData": "typename", "sTitle": "类别"},
                         {"mData": "money", "sTitle": "金额"},
                         {"mData": "username", "sTitle": "记账人"},
+                        {"mData": "description", "sTitle": "备注"},
                         { "sTitle" : "操作","mData": "gid","sWidth" : "250px","bSortable" : false,"mRender": function (data, display, row) {
                             var str = "";
                             str += "<a href='javascript:void(0);' onclick=\"angular.element(this).scope().modifyAccount('"+data+"')\">修改</a>";
@@ -104,7 +105,7 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
          });
 
          $scope.deleteAccount = function(type,gid){
-            var dlg = dialogs.confirm("删除账目","确认删除所选账目吗？",{size:'sm',windowClass: 'dia-custom-top'});
+            var dlg = dialogs.confirm("删除资金明细","确认删除所选资金明细吗？",{size:'sm',windowClass: 'dia-custom-top'});
             dlg.result.then(function(btn){
                 var selectids = new Array();
                 if(type == 1){
@@ -124,10 +125,10 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                           if(retMsg[0] == "success"){
                               $("#searchBut").click();
                           }else{
-                             dialogs.notify("删除账目失败",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
+                             dialogs.notify("删除资金明细失败",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
                           }
                         }else{
-                        	dialogs.notify("删除账目失败","删除账目失败",{size:'sm',windowClass: 'dia-custom-top'});              
+                        	dialogs.notify("删除资金明细失败","删除资金明细失败",{size:'sm',windowClass: 'dia-custom-top'});              
                         }
                     },function(data){
                         
@@ -161,7 +162,7 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
         
         var AddModalCtrl = function ($scope, $modalInstance) { 
             $scope.account = {};
-			httpService.get('getAccountTypes.do')
+			httpService.get('getAccountTypes.do',{"capitaluse":1})
 			    .then(function(data){
 			        $scope.acctypes = data;
 			        $scope.account.acctype = data[0].typeid;
@@ -182,14 +183,14 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                         $modalInstance.close();
                         $("#searchBut").click();
                     }else{
-                       var dlg = dialogs.notify("新增账目",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("新增资金明细",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){
                        });                         
                     }
                   }else{
-                       var dlg = dialogs.notify("新增账目","新增账目失败",{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("新增资金明细","新增资金明细失败",{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){
@@ -226,7 +227,7 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
             $scope.account = account;
             var param = {"gid":$scope.account.gid};
 
-			httpService.get('getAccountTypes.do')
+			httpService.get('getAccountTypes.do',{"capitaluse":1})
 			    .then(function(data){
 			        $scope.acctypes = data;
 			    },function(data){
@@ -254,14 +255,14 @@ define(['modules/account/module', 'lodash', 'jquery','domReady'], function (modu
                         $modalInstance.close();
                         $("#searchBut").click();
                     }else{
-                       var dlg = dialogs.notify("修改账目",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("修改资金明细",retMsg[1],{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){
                        });                          
                     }
                   }else{
-                       var dlg = dialogs.notify("修改账目","修改账目失败",{size:'sm',windowClass: 'dia-custom-top'});
+                       var dlg = dialogs.notify("修改资金明细","修改资金明细失败",{size:'sm',windowClass: 'dia-custom-top'});
                        dlg.result.then(function(btn){
                          $("input")[0].focus();
                        },function(btn){

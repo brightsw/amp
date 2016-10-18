@@ -1,0 +1,50 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+	<section id="widget-grid" class="">
+		<div class="row">
+			<article class="col-sm-12 col-md-12 col-lg-2">
+				<div class="jarviswidget" id="wid-id-2"
+					data-widget-colorbutton="false"
+					data-widget-editbutton="false"
+					data-widget-togglebutton="false"
+					data-widget-deletebutton="false"
+					data-widget-fullscreenbutton="false"
+					data-widget-custombutton="false"
+				>
+					<header>
+						<span class="widget-icon"><i class="fa fa-list"></i>  </span>
+						<h2>{{format('report.menu.default')}}</h2>
+					</header>
+					<div>
+						<div class="jarviswidget-editbox">
+	
+						</div>
+						<div class="widget-body" data-ng-init="getReportTree(0)">
+							<div id="groupTree" style="width:100%;overflow-x: auto">
+								<ul data-poly-tree class="ztree" treedata="treeData" setting="setting" display="child" id="tree"></ul>
+							</div>
+							<!-- <div class="dd" data-smart-nestable>
+								<ol class="dd-list" id="templatetype">
+									<li class="dd-item" ng-repeat="templatetype in templatetypes">
+										<div class='dd-handle' data-id='{{templatetype.typeid}}'>
+											{{templatetype.typename}}
+										</div>
+						                <ol class="dd-list" ng-if="templatetype.templates!=''">
+						                    <li class="dd-item" ng-repeat="template in templatetype.templates">
+						                        <div class='dd-handle' ng-class="{'10001':'bg-color-blue txt-color-white'}[{{template.templateid}}]" data-id='{{template.templateid}}' ng-click="showContent($event)">
+													{{template.templatename}}
+												</div>
+						                    </li>
+						                </ol>
+           							</li>
+								</ol>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</article>
+			<div class="col-sm-12 col-md-12 col-lg-10"
+				data-ui-view="rightFrame" data-autoscroll="false"></div>
+		</div>
+    </section>
+</div>

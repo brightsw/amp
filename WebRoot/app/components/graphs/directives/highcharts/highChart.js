@@ -18,8 +18,12 @@ define([
             link: function(scope, element) {
             	var param = Utils.caclReportDate(scope.granularity);
             	var action = "getReportTempalteChartData.do";
-            	if(scope.type == "1"){
-            		action = "getReportInstanceChartData.do";
+            	var fontcolor = "";
+            	var skinname = localStorage.getItem('sm-skin') || appConfig.smartSkin;
+            	if(skinname == "smart-style-5"){
+            		fontcolor = "#FFF";
+            	}else{
+            		fontcolor = "#333";
             	}
             	if(scope.data != "" ){
             		var option = {
@@ -46,10 +50,11 @@ define([
         				plotOptions : {
         					line : {
         						dataLabels : {
-        							enabled : true
+        							enabled : true,
+        							color: fontcolor
         						},
         						enableMouseTracking : true,
-        						showInLegend : false
+        						showInLegend : true
         					},
         					column : {
         						colorByPoint : true,
@@ -57,14 +62,14 @@ define([
         								'#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B',
         								'#60C0DD', '#D7504B', '#C6E579', '#F4E001', '#F0805A',
         								'#26C0C0' ],
-        						showInLegend : false
+        						showInLegend : true
         					},
         					pie : {
         						allowPointSelect : true,
         						cursor : 'pointer',
         						dataLabels : {
         							enabled : true,
-        							color : '#000000',
+        							color: fontcolor,
         							connectorColor : '#000000',
         							format : '<b>{point.name}</b>: {point.percentage:.1f} %'
         						},
@@ -77,13 +82,20 @@ define([
             		httpService.post(action,{"type":scope.type,"templateid":scope.data,"instanceid":scope.data,"starttime":param.starttime,"endtime":param.endtime}).then(function(resp){
             			var cType = resp[0].charttype;
             			option.chart.type = cType;
+        				option.legend = {
+        						itemStyle: {
+            						color: fontcolor
+            					},
+            					y:15
+        				};
             			option.title = {
             				style : {
             					fontSize : '16px',
             					fontWeight : 'bold',
-            					textTransform : 'uppercase'
+            					textTransform : 'uppercase',
+        						color: fontcolor
             				},
-            				text : resp[0].seriesName
+            				text : resp[0].title
             			};
 
             			if (cType == "column" || cType == "line") {
@@ -96,18 +108,27 @@ define([
             						align : 'left',
             						style : {
             							fontSize : '12px',
-            							fontFamily : 'Verdana, sans-serif'
+            							fontFamily : 'Verdana, sans-serif',
+        								color: fontcolor
             						}
             					}
             				};
 
             				option.yAxis = [ {
             					title : {
-            						text : '数量'
+            						text : '金额',
+        							style : {
+        								color: fontcolor
+        							}
             					},
-            					min: 0
+            					min: 0,
+        						labels : {
+        							style : {
+        								color: fontcolor
+        							}
+        						}
             				} ];
-
+            				
             				$(resp).each(function(i) {
             					option.series.push({
             						name : resp[i].seriesName,

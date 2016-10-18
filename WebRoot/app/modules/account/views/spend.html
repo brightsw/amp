@@ -1,0 +1,66 @@
+<div id="content" >
+	<section id="widget-grid" class="">
+		<article class="col-sm-12 col-md-12 col-lg-12" ng-controller="SpendCtrl">
+			<div data-jarvis-widget class="jarviswidget" id="wid-id-userlist-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+				<header id="searchDiv">
+					<span class="widget-icon"> <i class="fa fa-search"></i> </span>
+					<h2>{{format('common.searchcondition')}}</h2>
+				</header>
+				<div>
+					<div class="jarviswidget-editbox">
+					</div>
+					<div class="widget-body">
+						<form class="form-horizontal" id="exportForm" action="exportLog.do" method="POST" target="">
+							<input type="hidden" id="logtype" name="logtype" value="2"/>
+							<div class="form-group">
+								<label class="col-md-1 control-label">类别</label>
+								<div class="col-md-3">
+									<select ng-model="acctypeSch" class="form-control" >
+										<option></option>
+										<option value="{{ acctype.typeid }}" ng-repeat="acctype in acctypes">{{ acctype.typename }}</option>
+	               					</select> 
+								</div>
+								<label class="col-md-1 control-label">日期</label>
+								<div class="col-md-3">
+									<input class='form-control' style="width:40%;display:inline;" type='text' id='accdateBegin' name='accdateBegin' ng-model="accdateBegin" onkeydown="return false;" 
+										 data-smart-datepicker data-date-format="yy-mm-dd">
+									 -
+									 <input class='form-control' style="width:40%;display:inline;" type='text' id='accdateEnd' name='accdateEnd' ng-model="accdateEnd" onkeydown="return false;" 
+										 data-smart-datepicker data-date-format="yy-mm-dd">
+								</div>
+								<label class="col-md-1 control-label">金额</label>
+								<div class="col-md-3">
+									<input class='form-control' style="width:40%;display:inline;" type='text' id='moneyBegin' name='moneyBegin' ng-model="moneyBegin">
+									 -
+									<input class='form-control' style="width:40%;display:inline;" type='text' id='moneyEnd' name='moneyEnd' ng-model="moneyEnd">
+								</div>
+							</div>
+							<div class="form-actions">
+								<div class="row">
+									<div class="col-md-12">
+										<input class="btn btn-default" id="searchBut" name="searchBut" type="button" value="{{format('common.button.search')}}"/>
+										<input class="btn btn-default" id="clearBut" type="button" value="{{format('common.button.clear')}}" ng-click="clearData();"/>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="jarviswidget" id="widget-userlist-id-0" data-jarvis-widget>
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>支出明细列表</h2>
+				</header>
+				<div>
+					<div class="widget-body no-padding" data-sparkline-container>
+						<table id="mytable" datatable-basic data-table-options="tableOptions" search_data="searchData()"
+							class="display projects-table table table-striped table-bordered table-hover"
+							cellspacing="0" width="100%">
+						</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+</div>

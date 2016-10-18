@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : local
-Source Server Version : 50621
+Source Server Version : 50512
 Source Host           : localhost:3306
-Source Database       : polydata
+Source Database       : ampdb
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50512
 File Encoding         : 65001
 
-Date: 2016-10-16 01:41:29
+Date: 2016-10-18 17:31:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,15 +28,19 @@ CREATE TABLE `t_account` (
   `accyear` varchar(255) NOT NULL,
   `recdate` date NOT NULL,
   `recuser` int(10) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`gid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_account
 -- ----------------------------
-INSERT INTO `t_account` VALUES ('4', '45567', '1', '2016-10-16', '2016-10', '2016', '2016-10-16', '1');
-INSERT INTO `t_account` VALUES ('5', '81581', '2', '2016-10-16', '2016-10', '2016', '2016-10-16', '1');
-INSERT INTO `t_account` VALUES ('6', '28561', '3', '2016-10-16', '2016-10', '2016', '2016-10-16', '1');
+INSERT INTO `t_account` VALUES ('4', '45567', '1', '2016-10-16', '2016-10', '2016', '2016-10-16', '1', null);
+INSERT INTO `t_account` VALUES ('5', '81581', '2', '2016-10-16', '2016-10', '2016', '2016-10-16', '1', null);
+INSERT INTO `t_account` VALUES ('6', '28561', '3', '2016-10-16', '2016-10', '2016', '2016-10-16', '1', null);
+INSERT INTO `t_account` VALUES ('7', '11111', '1', '2016-10-17', '2016-10', '2016', '2016-10-17', '1', null);
+INSERT INTO `t_account` VALUES ('8', '22222', '1', '2016-10-14', '2016-10', '2016', '2016-10-17', '1', null);
+INSERT INTO `t_account` VALUES ('9', '33333', '1', '2016-10-13', '2016-10', '2016', '2016-10-17', '1', null);
 
 -- ----------------------------
 -- Table structure for t_accounttype
@@ -45,15 +49,93 @@ DROP TABLE IF EXISTS `t_accounttype`;
 CREATE TABLE `t_accounttype` (
   `typeid` int(10) NOT NULL AUTO_INCREMENT,
   `typename` varchar(200) NOT NULL,
+  `capitaluse` tinyint(1) DEFAULT '0' COMMENT '1是0否',
+  `incomeuse` tinyint(1) DEFAULT '0' COMMENT '1是0否',
+  `spenduse` tinyint(1) DEFAULT '0' COMMENT '1是0否',
+  `description` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`typeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_accounttype
 -- ----------------------------
-INSERT INTO `t_accounttype` VALUES ('1', '余额宝');
-INSERT INTO `t_accounttype` VALUES ('2', '易付宝');
-INSERT INTO `t_accounttype` VALUES ('3', '证券市值');
+INSERT INTO `t_accounttype` VALUES ('1', '余额宝', '1', '0', '0', null);
+INSERT INTO `t_accounttype` VALUES ('2', '易付宝', '1', '0', '0', null);
+INSERT INTO `t_accounttype` VALUES ('3', '证券市值', '1', '0', '0', null);
+INSERT INTO `t_accounttype` VALUES ('4', '营业额', '0', '1', '0', null);
+INSERT INTO `t_accounttype` VALUES ('5', '进货', '0', '0', '1', null);
+
+-- ----------------------------
+-- Table structure for t_income
+-- ----------------------------
+DROP TABLE IF EXISTS `t_income`;
+CREATE TABLE `t_income` (
+  `gid` int(10) NOT NULL AUTO_INCREMENT,
+  `money` int(10) NOT NULL,
+  `acctype` int(2) NOT NULL,
+  `accdate` date NOT NULL,
+  `accmon` varchar(255) NOT NULL,
+  `accyear` varchar(255) NOT NULL,
+  `recdate` date NOT NULL,
+  `recuser` int(10) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`gid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_income
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_rpt_template
+-- ----------------------------
+DROP TABLE IF EXISTS `t_rpt_template`;
+CREATE TABLE `t_rpt_template` (
+  `templateID` int(11) NOT NULL AUTO_INCREMENT COMMENT '模板编号',
+  `typeID` int(11) DEFAULT NULL COMMENT '模板类别编号',
+  `templateName` varchar(300) DEFAULT NULL COMMENT '模板名称',
+  `chartType` int(11) DEFAULT NULL COMMENT '统计图类型：  3柱状图4趋势图5饼图',
+  `chartSQL` text COMMENT '图表数据生成SQL',
+  `listSQL` text COMMENT '列表生成SQL',
+  `tableName` varchar(300) DEFAULT NULL COMMENT '表名',
+  `rptcondition` text COMMENT '过滤条件',
+  `reserved` text COMMENT '保留字段',
+  `granularity` int(11) DEFAULT NULL COMMENT '1：5分钟  2：小时  3：天 4：周\n 5：月\n 6：年\n 7：自定义',
+  `status` int(11) DEFAULT NULL COMMENT '状态：\n            1正常2删除',
+  PRIMARY KEY (`templateID`),
+  KEY `FK_Reference_100` (`typeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1007 DEFAULT CHARSET=utf8 COMMENT='报表模板表\r\nWebServer:读/写\r\n';
+
+-- ----------------------------
+-- Records of t_rpt_template
+-- ----------------------------
+INSERT INTO `t_rpt_template` VALUES ('1001', '1', '资金汇总周趋势图', '4', 'SELECT ACCDATE AS CATEGORY,SUM(MONEY) AS VALUE FROM T_ACCOUNT GROUP BY ACCDATE ORDER BY CATEGORY', null, '', null, '2', '4', '1');
+INSERT INTO `t_rpt_template` VALUES ('1002', '1', '资金汇总月趋势图', '4', 'SELECT ACCDATE AS CATEGORY,SUM(MONEY) AS VALUE FROM T_ACCOUNT GROUP BY ACCDATE ORDER BY CATEGORY', null, null, '', '3', '5', '1');
+INSERT INTO `t_rpt_template` VALUES ('1003', '1', '资金汇总年趋势图', '4', 'SELECT ACCDATE AS CATEGORY,SUM(MONEY) AS VALUE FROM T_ACCOUNT GROUP BY ACCDATE ORDER BY CATEGORY', null, null, null, '4', '6', '1');
+INSERT INTO `t_rpt_template` VALUES ('1004', '1', '资金分类周趋势图', '6', 'SELECT A.ACCDATE AS CATEGORY,A.MONEY AS VALUE,B.TYPENAME AS SERIES FROM T_ACCOUNT A,T_ACCOUNTTYPE B WHERE A.ACCTYPE=B.TYPEID GROUP BY CATEGORY,SERIES ORDER BY CATEGORY', 'SELECT TYPENAME AS SERIES FROM T_ACCOUNTTYPE WHERE CAPITALUSE=1', null, null, '2', '4', '1');
+INSERT INTO `t_rpt_template` VALUES ('1005', '1', '资金分类月趋势图', '6', 'SELECT A.ACCDATE AS CATEGORY,A.MONEY AS VALUE,B.TYPENAME AS SERIES FROM T_ACCOUNT A,T_ACCOUNTTYPE B WHERE A.ACCTYPE=B.TYPEID GROUP BY CATEGORY,SERIES ORDER BY CATEGORY', 'SELECT TYPENAME AS SERIES FROM T_ACCOUNTTYPE WHERE CAPITALUSE=1', null, null, '3', '5', '1');
+INSERT INTO `t_rpt_template` VALUES ('1006', '1', '资金分类年趋势图', '6', 'SELECT A.ACCDATE AS CATEGORY,A.MONEY AS VALUE,B.TYPENAME AS SERIES FROM T_ACCOUNT A,T_ACCOUNTTYPE B WHERE A.ACCTYPE=B.TYPEID GROUP BY CATEGORY,SERIES ORDER BY CATEGORY', 'SELECT TYPENAME AS SERIES FROM T_ACCOUNTTYPE WHERE CAPITALUSE=1', null, null, '4', '6', '1');
+
+-- ----------------------------
+-- Table structure for t_spend
+-- ----------------------------
+DROP TABLE IF EXISTS `t_spend`;
+CREATE TABLE `t_spend` (
+  `gid` int(10) NOT NULL AUTO_INCREMENT,
+  `money` int(10) NOT NULL,
+  `acctype` int(2) NOT NULL,
+  `accdate` date NOT NULL,
+  `accmon` varchar(255) NOT NULL,
+  `accyear` varchar(255) NOT NULL,
+  `recdate` date NOT NULL,
+  `recuser` int(10) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`gid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_spend
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_sys_log
@@ -69,7 +151,7 @@ CREATE TABLE `t_sys_log` (
   `operatorUser` varchar(300) DEFAULT NULL COMMENT '操作用户名',
   `logType` int(11) NOT NULL COMMENT '日志类型：\n            1：系统日志\n            2：用户日志',
   PRIMARY KEY (`logID`)
-) ENGINE=InnoDB AUTO_INCREMENT=68681 DEFAULT CHARSET=utf8 COMMENT='用户日志表\nWebServer：读\nBusinessManager：写 ';
+) ENGINE=InnoDB AUTO_INCREMENT=68704 DEFAULT CHARSET=utf8 COMMENT='用户日志表\nWebServer：读\nBusinessManager：写 ';
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -91,6 +173,29 @@ INSERT INTO `t_sys_log` VALUES ('68677', 'web', '127.0.0.1', '1', '新增账目�
 INSERT INTO `t_sys_log` VALUES ('68678', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 01:07:14', 'sysadmin', '2');
 INSERT INTO `t_sys_log` VALUES ('68679', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-16 01:10:04', 'sysadmin', '2');
 INSERT INTO `t_sys_log` VALUES ('68680', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-16 01:35:40', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68681', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 10:34:28', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68682', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 17:22:23', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68683', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 17:32:59', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68684', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 17:42:07', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68685', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 18:06:51', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68686', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-17 18:07:01', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68687', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-17 18:07:12', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68688', 'web', '127.0.0.1', '1', '新增账目成功', '2016-10-17 18:07:19', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68689', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 18:09:07', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68690', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-17 18:23:33', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68691', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 11:00:20', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68692', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 14:07:29', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68693', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 14:30:04', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68694', 'web', '127.0.0.1', '1', '新增账目类型错误', '2016-10-18 14:40:52', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68695', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 14:42:26', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68696', 'web', '127.0.0.1', '1', '新增账目类型成功', '2016-10-18 14:43:34', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68697', 'web', '127.0.0.1', '1', '新增账目类型成功', '2016-10-18 14:46:44', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68698', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 15:11:30', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68699', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 16:53:56', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68700', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 17:06:26', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68701', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 17:10:36', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68702', 'web', '127.0.0.1', '1', '用户(sysadmin)登出成功', '2016-10-18 17:13:51', 'sysadmin', '2');
+INSERT INTO `t_sys_log` VALUES ('68703', 'web', '127.0.0.1', '1', '用户(sysadmin)登录成功', '2016-10-18 17:13:53', 'sysadmin', '2');
 
 -- ----------------------------
 -- Table structure for t_sys_module
@@ -113,7 +218,12 @@ CREATE TABLE `t_sys_module` (
 -- Records of t_sys_module
 -- ----------------------------
 INSERT INTO `t_sys_module` VALUES ('3', '账目管理', '1', '0', null, '1', 'app.account', 'fa-list', '3');
+INSERT INTO `t_sys_module` VALUES ('4', '报表管理', '1', '0', null, '1', 'app.report', 'fa-bar-chart-o', '4');
 INSERT INTO `t_sys_module` VALUES ('6', '全局设置', '1', '0', '', '1', 'app.system', 'fa-gear', '6');
+INSERT INTO `t_sys_module` VALUES ('301', '资金管理', '2', '3', null, '1', 'app.account.capital', null, '301');
+INSERT INTO `t_sys_module` VALUES ('302', '收入管理', '2', '3', null, '1', 'app.account.income', null, '302');
+INSERT INTO `t_sys_module` VALUES ('303', '支出管理', '2', '3', null, '1', 'app.account.spend', null, '303');
+INSERT INTO `t_sys_module` VALUES ('304', '类别管理', '2', '3', null, '1', 'app.account.type', null, '304');
 INSERT INTO `t_sys_module` VALUES ('601', '用户管理', '2', '6', '', '1', 'app.system.user', null, '601');
 INSERT INTO `t_sys_module` VALUES ('603', '日志管理', '2', '6', '', '1', 'app.system.log.operatelog', null, '603');
 
@@ -160,7 +270,12 @@ CREATE TABLE `t_sys_role_module` (
 -- Records of t_sys_role_module
 -- ----------------------------
 INSERT INTO `t_sys_role_module` VALUES ('1', '3', 'app.account');
+INSERT INTO `t_sys_role_module` VALUES ('1', '4', 'app.report');
 INSERT INTO `t_sys_role_module` VALUES ('1', '6', 'app.system');
+INSERT INTO `t_sys_role_module` VALUES ('1', '301', null);
+INSERT INTO `t_sys_role_module` VALUES ('1', '302', null);
+INSERT INTO `t_sys_role_module` VALUES ('1', '303', null);
+INSERT INTO `t_sys_role_module` VALUES ('1', '304', null);
 INSERT INTO `t_sys_role_module` VALUES ('1', '601', 'app.system.user');
 INSERT INTO `t_sys_role_module` VALUES ('1', '603', 'app.system.log.operatelog');
 
@@ -241,4 +356,4 @@ CREATE TABLE `t_sys_userlogininfo` (
 -- ----------------------------
 -- Records of t_sys_userlogininfo
 -- ----------------------------
-INSERT INTO `t_sys_userlogininfo` VALUES ('4', '1', '2016-10-16 01:35:40', '127.0.0.1', null, null, '0', null, '6');
+INSERT INTO `t_sys_userlogininfo` VALUES ('4', '1', '2016-10-18 17:13:53', '127.0.0.1', null, null, '0', null, '22');

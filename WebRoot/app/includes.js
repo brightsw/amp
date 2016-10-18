@@ -91,7 +91,9 @@ define([
 
     'modules/system/module',
 
-    'modules/account/module'
+    'modules/account/module',
+
+    'modules/report/module'
     
 
     

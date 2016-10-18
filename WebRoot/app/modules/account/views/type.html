@@ -1,0 +1,21 @@
+<div id="content" >
+	<section id="widget-grid" class="">
+		<article class="col-sm-12 col-md-12 col-lg-12" ng-controller="AccountTypeCtrl">
+			<div class="jarviswidget" id="widget-userlist-id-0" data-jarvis-widget>
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>账目类别列表</h2>
+				</header>
+				<div>
+					<div class="widget-body no-padding" data-sparkline-container>
+						<input type="hidden" id="searchBut"/>
+						<table id="mytable" datatable-basic data-table-options="tableOptions" search_data="searchData()"
+							class="display projects-table table table-striped table-bordered table-hover"
+							cellspacing="0" width="100%">
+						</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+</div>

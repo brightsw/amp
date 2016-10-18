@@ -50,6 +50,7 @@ angular.module('loginApp', ['ui.bootstrap','dialogs.main','pascalprecht.translat
                     $rootScope.lang = data;
                 });
             });
+            $("#subBut").click();
         }
 
         $rootScope.format = function(key){

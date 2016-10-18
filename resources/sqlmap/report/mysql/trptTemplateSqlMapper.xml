@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bright.amp.report.model.TrptTemplate">
+
+	<resultMap id="TRptTemplate" type="com.bright.amp.report.model.TrptTemplate">
+					<id property="templateid" column="TEMPLATEID"/>
+        	<result property="typeid" column="TYPEID"/>
+        	<result property="templatename" column="TEMPLATENAME"/>
+        	<result property="charttype" column="CHARTTYPE"/>
+        	<result property="chartsql" column="CHARTSQL"/>
+        	<result property="listsql" column="LISTSQL"/>
+        	<result property="tablename" column="TABLENAME"/>
+        	<result property="reserved" column="RESERVED"/>
+        	<result property="rptcondition" column="RPTCONDITION"/>
+        	<result property="granularity" column="GRANULARITY"/>
+        	<result property="status" column="STATUS"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TRptTemplate.columns">
+	    <![CDATA[
+        	A.TEMPLATEID,
+        	A.TYPEID,
+        	A.TEMPLATENAME,
+        	A.CHARTTYPE,
+        	A.CHARTSQL,
+        	A.LISTSQL,
+        	A.TABLENAME,
+        	A.RESERVED,
+        	A.RPTCONDITION,
+        	A.GRANULARITY,
+        	A.STATUS
+	    ]]>
+	</sql>
+
+  <insert id="insert" parameterType="TRptTemplate">
+      INSERT INTO T_RPT_TEMPLATE
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+      		TEMPLATEID,
+      		<if test="@Ognl@isNotEmpty(typeid)">
+      			TYPEID,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(templatename)">
+      			TEMPLATENAME,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(charttype)">
+      			CHARTTYPE,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(chartsql)">
+      			CHARTSQL,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(listsql)">
+      			LISTSQL,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(tablename)">
+      			TABLENAME,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(reserved)">
+      			reserved,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(rptcondition)">
+      			rptcondition,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(granularity)">
+      			GRANULARITY,
+      		</if>
+      		<if test="@Ognl@isNotEmpty(status)">
+      			STATUS,
+      		</if>
+      </trim>
+      Values
+      <trim prefix="(" suffix=")" suffixOverrides="," >      
+      		next_val(),
+      		<if test="@Ognl@isNotEmpty(typeid)">
+      			#{typeid},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(templatename)">
+      			#{templatename},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(charttype)">
+      			#{charttype},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(chartsql)">
+      			#{chartsql},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(listsql)">
+      			#{listsql},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(tablename)">
+      			#{tablename},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(reserved)">
+      			#{reserved},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(rptcondition)">
+      			#{rptcondition},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(granularity)">
+      			#{granularity},
+      		</if>
+      		<if test="@Ognl@isNotEmpty(status)">
+      			#{status},
+      		</if>
+      </trim>      
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="templateid" >
+      SELECT CURR_VAL() AS templateid FROM DUAL
+  </selectKey>  
+  </insert>  
+    
+	<update id="update" parameterType="TRptTemplate">
+        UPDATE T_RPT_TEMPLATE
+          <set>
+	        <if test="@Ognl@isNotEmpty(typeid)">
+	        TYPEID = #{typeid} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(templatename)">
+	        TEMPLATENAME = #{templatename} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(charttype)">
+	        CHARTTYPE = #{charttype} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(chartsql)">
+	        CHARTSQL = #{chartsql} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(listsql)">
+	        LISTSQL = #{listsql} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(tablename)">
+	        TABLENAME = #{tablename} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(reserved)">
+	        RESERVED = #{reserved} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(rptcondition)">
+	        RPTCONDITION = #{rptcondition} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(granularity)">
+	        GRANULARITY = #{granularity} ,
+	        </if>
+	        <if test="@Ognl@isNotEmpty(status)">
+	        STATUS = #{status} ,
+	        </if>
+	        </set>
+        WHERE 
+	        TEMPLATEID = #{templateid} 
+	</update>
+
+  <delete id="delete" parameterType="java.lang.String" >
+      DELETE FROM T_RPT_TEMPLATE WHERE
+      TEMPLATEID = #{templateid} 
+  </delete>
+  
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+      DELETE FROM T_RPT_TEMPLATE WHERE
+      TEMPLATEID 
+			 in
+			<foreach item="items" collection="array" open="(" separator="," close=")"> 
+#{items}				  
+			</foreach> 
+  </delete>  
+  
+    
+  <select id="getById" resultType="TRptTemplate"  parameterType="java.lang.String">
+		SELECT <include refid="TRptTemplate.columns" /> 
+	    <![CDATA[
+		    FROM T_RPT_TEMPLATE A
+	        WHERE 
+		        A.TEMPLATEID = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="TRptTemplate.findPage.where">
+		<where>	      				
+	       <if test="@Ognl@isNotEmpty(templateid)">
+				AND A.TEMPLATEID = #{templateid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(typeid)">
+				AND A.TYPEID = #{typeid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(templatename)">
+				AND A.TEMPLATENAME = #{templatename}
+			</if>
+	       <if test="@Ognl@isNotEmpty(charttype)">
+				AND A.CHARTTYPE = #{charttype}
+			</if>
+	       <if test="@Ognl@isNotEmpty(chartsql)">
+				AND A.CHARTSQL = #{chartsql}
+			</if>
+			<if test="@Ognl@isNotEmpty(listsql)">
+			   	AND A.LISTSQL = #{listsql}
+			</if>
+	       <if test="@Ognl@isNotEmpty(tablename)">
+				AND A.TABLENAME = #{tablename}
+			</if>
+	       <if test="@Ognl@isNotEmpty(reserved)">
+				AND A.RESERVED = #{reserved}
+			</if>
+	       <if test="@Ognl@isNotEmpty(rptcondition)">
+				AND A.RPTCONDITION = #{rptcondition}
+			</if>
+	       <if test="@Ognl@isNotEmpty(granularity)">
+				AND A.GRANULARITY = #{granularity}
+			</if>
+	       <if test="@Ognl@isNotEmpty(status)">
+				AND A.STATUS = #{status}
+			</if>
+		</where>
+	</sql>
+		
+  <select id="count" resultType="java.lang.Long" parameterType="java.util.HashMap">
+      SELECT count(*) FROM T_RPT_TEMPLATE A
+			<include refid="TRptTemplate.findPage.where"/>    
+  </select>
+  
+  <select id="find" resultType="TRptTemplate"  parameterType="java.util.HashMap">
+    	SELECT <include refid="TRptTemplate.columns" /> 
+	    FROM T_RPT_TEMPLATE A
+		<include refid="TRptTemplate.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>		
+  </select>		
+
+  <select id="findAll" resultType="TRptTemplate"  parameterType="java.util.HashMap">
+    	SELECT <include refid="TRptTemplate.columns" />
+	    FROM T_RPT_TEMPLATE A
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>		
+  </select>		    	
+    
+	
+</mapper>
+

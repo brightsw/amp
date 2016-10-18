@@ -5,12 +5,20 @@
     <resultMap id="TaccountType" type="TaccountType">
         <id column="TYPEID" property="typeid" />
         <result column="TYPENAME" property="typename" />
+        <result column="CAPITALUSE" property="capitaluse" />
+        <result column="INCOMEUSE" property="incomeuse" />
+        <result column="SPENDUSE" property="spenduse" />
+        <result column="DESCRIPTION" property="description" />
     </resultMap>
 
     <!-- 用于select查询公用抽取的列 -->
     <sql id="TaccountType.columns">
         TYPEID,
-        TYPENAME
+        TYPENAME,
+        CAPITALUSE,
+        INCOMEUSE,
+        SPENDUSE,
+        DESCRIPTION
     </sql>
 
   <insert id="insert" parameterType="TaccountType">
@@ -18,11 +26,19 @@
       <trim prefix="(" suffix=")" suffixOverrides="," >
    			TYPEID,
         	TYPENAME,
+	        CAPITALUSE,
+	        INCOMEUSE,
+	        SPENDUSE,
+	        DESCRIPTION
       </trim>
       Values
       <trim prefix="(" suffix=")" suffixOverrides="," >      
    			#{typeid}, 
    			#{typename}, 
+   			#{capitaluse}, 
+   			#{incomeuse}, 
+   			#{spenduse}, 
+   			#{description}, 
       </trim>      
 	  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="typeid" >
 			      SELECT LAST_INSERT_ID();
@@ -37,7 +53,7 @@
   <select id="getById" resultType="TaccountType"  parameterType="java.lang.Integer">
 		SELECT <include refid="TaccountType.columns" />
 	    <![CDATA[
-		    FROM T_ACCOUNT 
+		    FROM T_ACCOUNTTYPE 
 	        WHERE 
 		        TYPEID = #{gid} 
 	    ]]>
@@ -46,10 +62,19 @@
 	<sql id="TaccountType.findPage.where">
 		<where>	      			
 	       <if test="@Ognl@isNotEmpty(typeid)">
-				AND A.TYPEID = #{typeid}
+				AND TYPEID = #{typeid}
 			</if>
 	       <if test="@Ognl@isNotEmpty(typename)">
-				AND A.TYPENAME = #{typename}
+				AND TYPENAME = #{typename}
+			</if>
+	       <if test="@Ognl@isNotEmpty(capitaluse)">
+				AND CAPITALUSE = #{capitaluse}
+			</if>
+	       <if test="@Ognl@isNotEmpty(incomeuse)">
+				AND INCOMEUSE = #{incomeuse}
+			</if>
+	       <if test="@Ognl@isNotEmpty(spenduse)">
+				AND SPENDUSE = #{spenduse}
 			</if>
 		</where>
 	</sql>

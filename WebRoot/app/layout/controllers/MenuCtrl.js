@@ -253,6 +253,7 @@ define(['layout/module'], function (module) {
         $scope.setSkin = function (skin) {
             var $root = $('body');
             $scope.smartSkin = skin.name;
+            appConfig.smartSkin = skin.name;
             $root.removeClass(_.pluck($scope.skins, 'name').join(' '));
             $root.addClass(skin.name);
             localStorage.setItem('sm-skin', skin.name);

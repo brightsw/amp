@@ -1,0 +1,46 @@
+<form id="dataForm" name="dataForm" spend-form-validator callback="ok()">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4>修改支出明细</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="loginname">类别</label>
+                <select class="form-control"  ng-model="spend.acctype" ng-options="acctype.typeid as acctype.typename for acctype in acctypes">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">日期</label>
+                <input class='form-control' type='text' id='accdate' name='accdate' ng-model="spend.accdate" onkeydown="return false;" 
+					 placeholder="{{format('common.valid.required')}}" data-smart-datepicker data-date-format="yy-mm-dd">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="username">金额</label>
+                <input type="text" class="form-control" placeholder="{{format('common.valid.required')}}" id="money" name="money" ng-model="spend.money"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="description">备注</label>
+                <textarea class="form-control" placeholder="{{format('common.valid.max200char')}}" rows="5" id="description" name="description" ng-model="spend.description"/></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default">{{format('common.button.submit')}}</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">{{format('common.button.close')}}</button>
+</div>
+</form>

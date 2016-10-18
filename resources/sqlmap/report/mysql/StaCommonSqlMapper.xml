@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bright.amp.report.model.TstaCommon">
+
+	<resultMap id="TStaCommon" type="com.bright.amp.report.model.TstaCommon">
+        	<result property="value" column="value"/>
+        	<result property="series" column="series"/>
+        	<result property="category" column="category"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TStaCommon.columns">
+	    <![CDATA[
+        	value,
+        	series,
+        	category
+	    ]]>
+	</sql>
+
+	<select id="find" resultType="TStaCommon"  parameterType="java.util.HashMap">
+	    	${querySQL}
+	</select>
+	
+	<select id="count" resultType="java.lang.Long" parameterType="java.util.HashMap">
+		SELECT count(*) FROM (${querySQL}) TT
+	</select>
+</mapper>
+

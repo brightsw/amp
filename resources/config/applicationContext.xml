@@ -57,7 +57,8 @@
 			        com.bright.amp.log.model,
 			        com.bright.amp.authc.model,
 			        com.bright.amp.system.model,
-			        com.bright.amp.account.model"
+			        com.bright.amp.account.model,
+			        com.bright.amp.report.model"
 			        />
     </bean>
 

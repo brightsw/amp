@@ -34,7 +34,16 @@ define(['modules/account/module','bootstrap-validator'], function(module){
         							message : $rootScope.format('common.valid.required')
         						},
         						digis : {
-        							message : "必须为正整数"
+        							message : "必须为整数"
+        						}
+        					}
+        				},
+        				description : {
+        					group : '.col-md-12',
+        					validators : {
+        						stringLength : {
+        							max : 200,
+        							message : $rootScope.format("common.valid.max200char")
         						}
         					}
         				}
