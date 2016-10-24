@@ -27,9 +27,8 @@ define([
             	}
             	if(scope.data != "" ){
             		var option = {
-        				colors : [ '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
-        						'#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
-        						'#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0' ],
+        				colors : ['#F4E001','#FE8463', '#C6E579', '#F3A43B', '#60C0DD',
+        						'#D7504B', '#4fd877', '#FAD860', '#F0805A', '#26C0C0','#925ba7','#e371cc' ],
         				chart : {
         					backgroundColor : null,
         					style : {
@@ -57,11 +56,12 @@ define([
         						showInLegend : true
         					},
         					column : {
-        						colorByPoint : true,
-        						colors : [ '#C1232B', '#B5C334', '#FCCE10', '#E87C25',
-        								'#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B',
-        								'#60C0DD', '#D7504B', '#C6E579', '#F4E001', '#F0805A',
-        								'#26C0C0' ],
+        						dataLabels : {
+        							enabled : true,
+        							color: fontcolor
+        						},
+        						colors : ['#F4E001','#FE8463', '#C6E579', '#F3A43B', '#60C0DD',
+        	        						'#D7504B', '#4fd877', '#FAD860', '#F0805A', '#26C0C0','#925ba7','#e371cc' ],
         						showInLegend : true
         					},
         					pie : {
@@ -99,13 +99,16 @@ define([
             			};
 
             			if (cType == "column" || cType == "line") {
-
+            				var align = "center";
+            				if(resp[0].rotation=="60"){
+            					align = "left";
+            				}
             				option.chart.margin = [ , 40, 80, ];
             				option.xAxis = {
             					categories : eval(resp[0].category),
             					labels : {
             						rotation : eval(resp[0].rotation),
-            						align : 'left',
+            						align : align,
             						style : {
             							fontSize : '12px',
             							fontFamily : 'Verdana, sans-serif',
@@ -128,7 +131,12 @@ define([
         							}
         						}
             				} ];
-            				
+            				option.plotOptions.series = {
+        						borderWidth: 0,
+                                dataLabels: {
+                                    enabled: true
+                                }
+            				};
             				$(resp).each(function(i) {
             					option.series.push({
             						name : resp[i].seriesName,

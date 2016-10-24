@@ -23,7 +23,7 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 	@Autowired
 	private TstaCommonDao tstaCommonDao;
 
-	public List<TstaCommon> querySql(Map<String,Object> map){
+	public List<TstaCommon> querySql(Map<String, Object> map) {
 		return tstaCommonDao.query(map);
 	}
 
@@ -55,7 +55,7 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 				endCalendar.setTime(endDate);
 				while (true) {
 					xdatas.add(df.format(startCalendar.getTime()));
-					
+
 					if (startCalendar.getTimeInMillis() < endCalendar.getTimeInMillis()) {
 						startCalendar.add(Calendar.DAY_OF_MONTH, 1);
 					} else {
@@ -66,6 +66,26 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 			} else if ("4".equals(type)) {
 				for (int i = 1; i <= 12; i++) {
 					String month = startTime.substring(0, 5);
+					if (i < 10) {
+						month += "0" + i;
+					} else {
+						month += "" + i;
+					}
+					xdatas.add(month);
+				}
+			} else if ("5".equals(type)) {
+				for (int i = 1; i <= 12; i++) {
+					String month = startTime.substring(0, 5);
+					if (i < 10) {
+						month += "0" + i;
+					} else {
+						month += "" + i;
+					}
+					xdatas.add(month);
+				}
+			} else if ("6".equals(type)) {
+				for (int i = 1; i <= 12; i++) {
+					String month = "";
 					if (i < 10) {
 						month += "0" + i;
 					} else {
@@ -119,7 +139,7 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 			c.add(Calendar.YEAR, -1);
 			beginTime = new SimpleDateFormat("yyyy").format(c.getTime());
 			return beginTime;
-		} else {
+		} else if (template.getGranularity() == 7) {
 			// 自定义时间段
 			if (template.getRptcondition() != null) {
 				for (String con : template.getRptcondition().split(";")) {
@@ -149,7 +169,14 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 				}
 				return beginTime + " ~ " + endTime;
 			}
-			return "unknown";
+			return "";
+		} else if (template.getGranularity() == 8) {
+			// 上一年
+			Calendar c = Calendar.getInstance();
+			beginTime = new SimpleDateFormat("yyyy").format(c.getTime());
+			return beginTime;
+		} else {
+			return "";
 		}
 	}
 
@@ -175,24 +202,28 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 			if (str.indexOf("_=") > 0) {
 				String[] strArr = str.split("_=");
 				if ("sev".equals(strArr[0]) || "severity".equals(strArr[0])) {
-					sevTemp += " (" + strArr[0] + " >= " + strArr[1].split("@")[0] + " AND " + strArr[0] + " <= " + strArr[1].split("@")[1] + ") OR ";
+					sevTemp += " (" + strArr[0] + " >= " + strArr[1].split("@")[0] + " AND " + strArr[0] + " <= "
+					        + strArr[1].split("@")[1] + ") OR ";
 				}
 				if ("time".equals(strArr[0])) {
 					if ("1".equals(trendType)) {
 						String weekRange = toFormatTimeRange(strArr[1], "1");
-						timeTemp += " AND calctime >= str_to_date('" + weekRange.split("@")[0] + "','%Y-%m-%d %H:%i:%s') AND calctime <= str_to_date('"
-								+ weekRange.split("@")[0].substring(0, 10) + " 23:59:59" + "','%Y-%m-%d %H:%i:%s') ";
+						timeTemp += " AND calctime >= str_to_date('" + weekRange.split("@")[0]
+						        + "','%Y-%m-%d %H:%i:%s') AND calctime <= str_to_date('"
+						        + weekRange.split("@")[0].substring(0, 10) + " 23:59:59" + "','%Y-%m-%d %H:%i:%s') ";
 					} else if ("2".equals(trendType)) {
 						String weekRange = toFormatTimeRange(strArr[1], "2");
-						timeTemp += " AND calctime >= str_to_date('" + weekRange.split("@")[0] + "','%Y-%m-%d %H:%i:%s') AND calctime <= str_to_date('"
-								+ weekRange.split("@")[1].substring(0, 10) + " 23:59:59" + "','%Y-%m-%d %H:%i:%s') ";
+						timeTemp += " AND calctime >= str_to_date('" + weekRange.split("@")[0]
+						        + "','%Y-%m-%d %H:%i:%s') AND calctime <= str_to_date('"
+						        + weekRange.split("@")[1].substring(0, 10) + " 23:59:59" + "','%Y-%m-%d %H:%i:%s') ";
 					} else if ("3".equals(trendType)) {
 						timeTemp += "";// 全月
 					} else if ("4".equals(trendType)) {
 						timeTemp += "";// 全年
 					} else {
-						timeTemp += " AND calctime >= str_to_date('" + strArr[1].split("@")[0] + "','%Y-%m-%d %H:%i:%s') AND calctime <= str_to_date('" + strArr[1].split("@")[1]
-								+ "','%Y-%m-%d %H:%i:%s') ";
+						timeTemp += " AND calctime >= str_to_date('" + strArr[1].split("@")[0]
+						        + "','%Y-%m-%d %H:%i:%s') AND calctime <= str_to_date('" + strArr[1].split("@")[1]
+						        + "','%Y-%m-%d %H:%i:%s') ";
 					}
 				}
 			} else if (str.indexOf("~=") > 0 && str.indexOf("^=") < 0) {
@@ -283,7 +314,7 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 
 		if (timeStr == "") {
 			if ("1".equals(type)) {
-				// 上一周
+				// 上一天
 				Calendar c = Calendar.getInstance();
 				c.add(Calendar.DAY_OF_MONTH, -1);
 				beginTime = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()) + " 00:00:00";
@@ -325,6 +356,15 @@ public class RptTemplateService extends BaseService<TrptTemplate, TrptTemplateDa
 				c.add(Calendar.YEAR, -1);
 				beginTime = new SimpleDateFormat("yyyy").format(c.getTime()) + "-01-01 00:00:00";
 				endTime = new SimpleDateFormat("yyyy").format(c.getTime()) + "-12-31 00:00:00";
+			} else if ("5".equals(type)) {
+				// 当年
+				Calendar c = Calendar.getInstance();
+				beginTime = new SimpleDateFormat("yyyy").format(c.getTime()) + "-01-01 00:00:00";
+				endTime = new SimpleDateFormat("yyyy").format(c.getTime()) + "-12-31 00:00:00";
+			} else if ("6".equals(type)) {
+				// 当年
+				beginTime = "01";
+				endTime = "12";
 			} else {
 			}
 			timeRange = beginTime + "@" + endTime;

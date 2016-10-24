@@ -42,7 +42,11 @@ public class ReportController extends BaseController {
 		String value = "[ ";
 
 		String timeRange = rptTemplateService.toTimeRange(template);
-		jsonMap.put("title", template.getTemplatename() + " (" + timeRange + ")");
+		String title = template.getTemplatename();
+		if (!timeRange.equals("")) {
+			title += " (" + timeRange + ")";
+		}
+		jsonMap.put("title", title);
 		map.put("querySQL", template.getChartsql());
 		List<TstaCommon> categorys = rptTemplateService.querySql(map);
 		if (categorys.size() == 0) {
@@ -54,21 +58,12 @@ public class ReportController extends BaseController {
 
 		if (template.getCharttype() == 5) {
 			// 饼图
-			int otherValue = 0;
 			for (int i = 0; i < categorys.size(); i++) {
 				String record = categorys.get(i).getValue();
 				if (record == null) {
 					record = "0";
 				}
-				if (i < 10) {
-					value += "['" + StringUtil.IPv6toIPv4(categorys.get(i).getCategory()) + "'," + record + "],";
-				} else {
-					otherValue += Integer.parseInt(record);
-				}
-			}
-
-			if (categorys.size() >= 10) {
-				value += "['others'," + otherValue + "],";
+				value += "['" + StringUtil.IPv6toIPv4(categorys.get(i).getCategory()) + "'," + record + "],";
 			}
 
 			jsonMap.put("charttype", "pie");
@@ -115,19 +110,9 @@ public class ReportController extends BaseController {
 
 		} else if (template.getCharttype() == 3) {
 			// 柱状图
-			int otherValue = 0;
 			for (int i = 0; i < categorys.size(); i++) {
-				if (i < 10) {
-					legend += "'" + StringUtil.IPv6toIPv4(categorys.get(i).getCategory()) + "',";
-					value += categorys.get(i).getValue() + ",";
-				} else {
-					otherValue += Integer.parseInt(categorys.get(i).getValue());
-				}
-			}
-
-			if (categorys.size() >= 10) {
-				legend += "'others',";
-				value += otherValue + ",";
+				legend += "'" + StringUtil.IPv6toIPv4(categorys.get(i).getCategory()) + "',";
+				value += categorys.get(i).getValue() + ",";
 			}
 
 			jsonMap.put("category", legend.substring(0, legend.length() - 1) + "]");
@@ -139,7 +124,7 @@ public class ReportController extends BaseController {
 		} else if (template.getCharttype() == 6) {
 			// 多线趋势图
 			String time = "";
-			if (template.getGranularity() == 7) {
+			if (template.getGranularity() == 7 && template.getRptcondition() != null) {
 				for (String str : template.getRptcondition().split(";")) {
 					if ("time".equals(str.split("_=")[0])) {
 						time = str.split("_=")[1];
@@ -182,6 +167,100 @@ public class ReportController extends BaseController {
 				legend = "[ ";
 				value = "[ ";
 			}
+
+		} else if (template.getCharttype() == 7) {
+			// 多柱柱状图
+			String time = "";
+			if (template.getGranularity() == 7 && template.getRptcondition() != null) {
+				for (String str : template.getRptcondition().split(";")) {
+					if ("time".equals(str.split("_=")[0])) {
+						time = str.split("_=")[1];
+					}
+				}
+			}
+			ArrayList<String> xdatas = rptTemplateService.generatorxAxis(time, template.getReserved());
+
+			if ("3".equals(template.getReserved())) {
+				jsonMap.put("rotation", "60");
+			} else {
+				jsonMap.put("rotation", "0");
+			}
+			jsonMap.put("charttype", "column");
+
+			map.put("querySQL", template.getListsql());
+			List<TstaCommon> serieses = rptTemplateService.querySql(map);
+
+			for (TstaCommon series : serieses) {
+				for (int x = 0; x < xdatas.size(); x++) {
+					legend += "'" + xdatas.get(x) + "',";
+					boolean flag = true;
+					for (int j = 0; j < categorys.size(); j++) {
+						if (categorys.get(j).getCategory().equals(xdatas.get(x))
+						        && categorys.get(j).getSeries().equals(series.getSeries())) {
+							value += categorys.get(j).getValue() + ",";
+							flag = false;
+						}
+					}
+					if (flag) {
+						value += "0,";
+					}
+				}
+
+				jsonMap.put("category", legend.substring(0, legend.length() - 1) + "]");
+				jsonMap.put("seriesName", series.getSeries());
+				jsonMap.put("seriesData", value.substring(0, value.length() - 1) + "]");
+				charts.add(jsonMap);
+				jsonMap = new HashMap<String, String>();
+				legend = "[ ";
+				value = "[ ";
+			}
+
+		} else if (template.getCharttype() == 8) {
+			// 时间范围柱状图
+			String time = "";
+			ArrayList<String> xdatas = rptTemplateService.generatorxAxis(time, template.getReserved());
+
+			if ("3".equals(template.getReserved())) {
+				jsonMap.put("rotation", "60");
+			} else {
+				jsonMap.put("rotation", "0");
+			}
+			for (int x = 0; x < xdatas.size(); x++) {
+				legend += "'" + xdatas.get(x) + "',";
+				boolean flag = true;
+				for (int j = 0; j < categorys.size(); j++) {
+					if (categorys.get(j).getCategory().equals(xdatas.get(x))) {
+						value += categorys.get(j).getValue() + ",";
+						flag = false;
+					}
+				}
+				if (flag) {
+					value += "0,";
+				}
+			}
+
+			jsonMap.put("category", legend.substring(0, legend.length() - 1) + "]");
+			jsonMap.put("charttype", "column");
+			jsonMap.put("seriesName", template.getTemplatename() + " (" + timeRange + ")");
+			jsonMap.put("seriesData", value.substring(0, value.length() - 1) + "]");
+			charts.add(jsonMap);
+
+		} else if (template.getCharttype() == 9) {
+			// 时间范围饼图
+			String time = "";
+			ArrayList<String> xdatas = rptTemplateService.generatorxAxis(time, template.getReserved());
+			for (int x = 0; x < xdatas.size(); x++) {
+				for (int j = 0; j < categorys.size(); j++) {
+					if (categorys.get(j).getCategory().equals(xdatas.get(x))) {
+						value += "['" + xdatas.get(x) + "'," + categorys.get(j).getValue() + "],";
+					}
+				}
+			}
+
+			jsonMap.put("charttype", "pie");
+			jsonMap.put("seriesName", template.getTemplatename() + " (" + timeRange + ")");
+			jsonMap.put("seriesData", value.substring(0, value.length() - 1) + "]");
+			charts.add(jsonMap);
 
 		}
 		renderJson(charts, response);
